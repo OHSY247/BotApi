@@ -35,3 +35,4 @@ build/
 ### customize ###
 test.*
 *.zip
+*.class
