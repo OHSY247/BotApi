@@ -1,5 +1,6 @@
 package github.botapi.destiny2;
 
+import github.botapi.destiny2.handler.LightGGBO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +44,7 @@ public class Destiny2Controller {
      */
     @RequestMapping("/daily")
     public String daily(){
+        //System.out.println(1/0);
         return "destiny2 daily";
     }
     /**
@@ -58,9 +60,12 @@ public class Destiny2Controller {
      * LightGG 物品名查询并生成截图
      * @author
      * @date
+     * @params item 支持对itemId和itemName匹配查询
      */
     @RequestMapping("/lightGGItem")
-    public String lightGG(){ return "destiny2 lightGG test";}
+    public String lightGG(String item){
+        return LightGGBO.generateImgPath(item);
+    }
     /**
      * LightGG 查询物故事/npc等文本介绍信息
      * @author

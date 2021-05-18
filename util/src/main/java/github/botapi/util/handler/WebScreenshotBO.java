@@ -1,0 +1,64 @@
+package github.botapi.util.handler;
+
+import java.io.*;
+
+/**
+ * @author straycamel
+ * @date 2021/5/18
+ * take streenshot of web page
+ * java没有太好的网页截图工具，我们这里使用js编写，并用java调用js脚本进行截图并生成图片，返回图片url
+ */
+public class WebScreenshotBO {
+    public static String ROOT_STOCK_WEB_SCREENSHOT_JS = "util/src/main/java/github/botapi/util/js/WebScreenshot.js";
+
+    private final String WEB_SCREENSHOT_JS = new File(System.getProperty("user.dir"), ROOT_STOCK_WEB_SCREENSHOT_JS).toString();
+
+    public WebScreenshotBO() {
+    }
+
+    /**
+     * 通过url生成图片并保存到本地resImgPath
+     *
+     * @params url 需要截图的url
+     * @params resImgPath 截图后保存的体制
+     */
+    public String generateImgPath(String url, String resImgPath) throws IOException {
+        PhantomjsBO phantomjsBO = new PhantomjsBO();
+        String phantomjsApp = phantomjsBO.fetchPath();
+        // 使用Runtime类执行终端命令
+        String BLANK = "  ";
+        try {
+            Process process = Runtime.getRuntime().exec(phantomjsApp + BLANK
+                    + WEB_SCREENSHOT_JS + BLANK
+                    + url + BLANK
+                    + resImgPath);
+
+            InputStream inputStream = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            System.out.println(reader.lines());
+            String tmp = "";
+            while ((tmp = reader.readLine()) != null) {
+                /*
+                渲染过程中close destroy会报错
+                if (reader != null) {
+                    reader.close();
+                }
+                if (process != null) {
+                    process.destroy();
+                    process = null;
+                }
+                */
+            }
+            System.out.print("phantomjs生成图片渲染中完成");
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resImgPath;
+    }
+
+    @Override
+    public String toString() {
+        return "to string";
+    }
+}

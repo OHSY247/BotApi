@@ -27,6 +27,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>io.github.fanyong920</groupId>
+          <artifactId>jvppeteer</artifactId>
+          <version>1.1.3</version>
+        </dependency>
     </dependencies>
 <build>
         <!--解决：No goals have been specified for this build.-->

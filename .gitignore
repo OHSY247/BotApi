@@ -36,3 +36,9 @@ build/
 test.*
 *.zip
 *.class
+tmp/*
+!tmp/*.md
+log/*
+!log/*.md
+util/src/main/java/github/botapi/util/app/*/**
+!util/src/main/java/github/botapi/util/app/*/**/*.md
