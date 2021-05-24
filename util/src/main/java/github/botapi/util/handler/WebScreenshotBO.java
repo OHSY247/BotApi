@@ -17,8 +17,7 @@ public class WebScreenshotBO {
     }
 
     /**
-     * 通过url生成图片并保存到本地resImgPath
-     *
+     * 使用phantomjs 通过url生成图片并保存到本地resImgPath
      * @params url 需要截图的url
      * @params resImgPath 截图后保存的体制
      */
@@ -35,22 +34,20 @@ public class WebScreenshotBO {
 
             InputStream inputStream = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            System.out.println(reader.lines());
             String tmp = "";
-            while ((tmp = reader.readLine()) != null) {
-                /*
-                渲染过程中close destroy会报错
-                if (reader != null) {
+            while ((tmp = reader.readLine()) != null ) {
+
+                /*if (reader != null) {
                     reader.close();
                 }
-                if (process != null) {
+                if (process != null ) {
                     process.destroy();
-                    process = null;
-                }
-                */
+                }*/
+
             }
-            System.out.print("phantomjs生成图片渲染中完成");
             reader.close();
+            process.destroy();
+            System.out.print("phantomjs生成图片渲染中完成");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,8 @@
 package github.botapi.util.handler;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.ashot.AShot;
@@ -87,7 +89,7 @@ public class SeleniumBO {
 			JavascriptExecutor jexec = (JavascriptExecutor) chromeDriver;
 			int width =((Long)  jexec.executeScript("return document.body.scrollWidth")).intValue();
 			int height = ((Long) jexec.executeScript("return document.body.scrollHeight")).intValue();
-            System.out.printf("[%d %d]\n", width, height);
+            System.out.printf("网页窗口最大尺寸[%d*%d]\n", width, height);
             //设置浏览窗口大小
 			chromeDriver.manage().window().setSize(new Dimension(width, height));
 			Screenshot screenshot = new AShot().coordsProvider(new WebDriverCoordsProvider()).takeScreenshot(chromeDriver);
@@ -110,7 +112,7 @@ public class SeleniumBO {
         return pathname;
     }
 
-    public WebDriver fetchChromeDriver(){
+    public WebDriver getDriver(){
         return chromeDriver;
     }
 

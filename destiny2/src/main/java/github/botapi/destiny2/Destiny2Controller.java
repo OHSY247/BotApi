@@ -1,5 +1,6 @@
 package github.botapi.destiny2;
 
+import github.botapi.destiny2.handler.DataHandler;
 import github.botapi.destiny2.handler.LightGGBO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ public class Destiny2Controller {
      */
     @RequestMapping("/test")
     public String test(){
+        DataHandler.test();
         return "destiny2 test";
     }
     /**
