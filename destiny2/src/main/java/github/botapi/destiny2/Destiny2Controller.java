@@ -11,6 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/Destiny2")
 public class Destiny2Controller {
+    public Destiny2Controller(){
+        System.out.println("每次启动时-进行所有的数据更新-可能耗时有点久，但是数据为项目所需");
+        Thread t = new Thread(() -> {
+            System.out.println("start new thread!");
+            start();
+        });
+        t.start();
+    }
+    /**
+     * 启动模块所需要加载的方法
+     */
+    public void start(){
+        DataHandler.dailyRefresh();
+        DataHandler.weeklyRefresh();
+    }
     /**
      * 测试接口
      * @author
