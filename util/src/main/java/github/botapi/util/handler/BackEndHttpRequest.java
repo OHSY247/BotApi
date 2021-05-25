@@ -1,9 +1,7 @@
 package github.botapi.util.handler;
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
@@ -16,6 +14,90 @@ import java.util.Map;
  * https://www.cnblogs.com/Moming0/p/10677940.html
  */
 public class BackEndHttpRequest {
+    private static final int  BUFFER_SIZE = 2 * 1024;
+    public static String SEPARATOR="/";
+    /**
+     * 从网络Url中下载文件-自动构造文件名
+     * @param urlStr-fileName设定为以"/"分割url取最后一串字符
+     * @param savePath
+     * @return 解析后的文件名
+     */
+    public String downloadFromUrl(String urlStr, String savePath){
+        try {
+            if (urlStr==null || !urlStr.contains(SEPARATOR)){
+            throw new IOException("下载链接无法解析文件名");
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] urlArray = urlStr.split(SEPARATOR);
+        String fileName = urlArray[urlArray.length-1];
+        try {
+            downloadFromUrl(urlStr,fileName,savePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String filePath = new File(savePath,fileName).toString();
+        System.out.println("filePath:"+filePath);
+        return filePath;
+    }
+    /**
+     * 从网络Url中下载文件
+     * 若文件已存在-提醒即可
+     * @param urlStr
+     * @param fileName
+     * @param savePath
+     * @throws IOException
+     */
+    public static void  downloadFromUrl(String urlStr, String fileName, String savePath) throws IOException{
+        //文件保存位置
+        File saveDir = new File(savePath);
+        if(!saveDir.exists()){
+            saveDir.mkdir();
+        }
+        File file = new File(saveDir+File.separator+fileName);
+        if (file.exists()){
+            System.out.println("notice:"+urlStr+" already download");
+        }else{
+            URL url = new URL(urlStr);
+            URLConnection conn = url.openConnection();
+            //设置超时间为3秒
+            conn.setConnectTimeout(BUFFER_SIZE);
+            //防止屏蔽程序抓取而返回403错误
+            conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+
+            //得到输入流
+            InputStream inputStream = conn.getInputStream();
+            //获取自己数组
+            byte[] getData = readInputStream(inputStream);
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(getData);
+            if(fos!=null){
+                fos.close();
+            }
+            if(inputStream!=null){
+                inputStream.close();
+            }
+            System.out.println("info:"+url+" download success");
+
+        }
+    }
+    /**
+     * 从输入流中获取字节数组
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
+    public static  byte[] readInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        while((len = inputStream.read(buffer)) != -1) {
+            bos.write(buffer, 0, len);
+        }
+        bos.close();
+        return bos.toByteArray();
+    }
     /**
      * 向指定的URL发送GET方法的请求
      * @param url    发送请求的URL
@@ -37,12 +119,8 @@ public class BackEndHttpRequest {
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             //connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-            /**
-             * 遍历字典
-             */
-            System.out.println(headers);
+
             Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
-            System.out.println(iterator);
             if (iterator !=null){
                 System.out.println(iterator);
                 while (iterator.hasNext()) {

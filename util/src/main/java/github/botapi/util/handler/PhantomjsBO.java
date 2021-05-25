@@ -97,7 +97,7 @@ public class PhantomjsBO {
         /**
         * 对文件进行过滤
         * */
-        ArrayList<String> appPaths = FileHandlerBO.getRecurseFiles(FILE_PATH, filter);
+        ArrayList<String> appPaths = DirHandler.getRecurseFiles(FILE_PATH, filter);
 
         try{
             System.out.println(appPaths.get(0));

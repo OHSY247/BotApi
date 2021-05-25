@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @date 2021/5/18
  * 文件管理操作对象
  */
-public class FileHandlerBO {
+public class DirHandler {
     /**
      * 获取文件夹下所有文件
      * */
