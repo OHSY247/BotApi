@@ -1,0 +1,1 @@
+## 命运2manifest下载后sqlite文件夹

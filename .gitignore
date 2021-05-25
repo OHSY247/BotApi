@@ -35,3 +35,16 @@ build/
 ### customize ###
 test.*
 *.zip
+*.class
+tmp/*
+!tmp/**/*.md
+!tmp/*.md
+data/**
+!data/*
+!data/*.md
+!data/**/*.md
+!**/*.md
+log/*
+!log/*.md
+util/src/main/java/github/botapi/util/app/*/**
+!util/src/main/java/github/botapi/util/app/*/**/*.md
