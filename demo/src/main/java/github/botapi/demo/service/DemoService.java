@@ -1,7 +1,7 @@
-package github.botapi.main.service;
+package github.botapi.demo.service;
 
-import github.botapi.main.dao.DemoDAO;
-import github.botapi.main.model.DemoDO;
+import github.botapi.demo.dao.DemoDAO;
+import github.botapi.demo.model.DemoDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,7 @@ public class DemoService {
 
     @Autowired
     public DemoService(DemoDAO dao) {
+
         this.dao = dao;
     }
 

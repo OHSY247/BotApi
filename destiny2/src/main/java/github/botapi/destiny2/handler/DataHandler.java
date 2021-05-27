@@ -1,11 +1,9 @@
 package github.botapi.destiny2.handler;
 
 import github.botapi.util.handler.BackEndHttpRequest;
-import github.botapi.util.handler.FileHandler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Map;
@@ -55,8 +53,8 @@ public class DataHandler extends BackEndHttpRequest {
         if (content==null){
             return;
         } else {
-            FileHandler.clearDir(new File(DOWNLOAD_MANIFEST_DIR));
-            FileHandler.clearDir(new File(DATA_MANIFEST_DIR));
+            /*FileHandler.clearDir(new File(DOWNLOAD_MANIFEST_DIR));
+            FileHandler.clearDir(new File(DATA_MANIFEST_DIR));*/
             System.out.println("Manifest文件夹清空-数据进行重新下载；version："+authApi.Version);
             Iterator<Map.Entry<String,String>> iterator = content.entrySet().iterator();
             if (iterator !=null){

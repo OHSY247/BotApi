@@ -1,4 +1,4 @@
-package github.botapi.main.model;
+package github.botapi.demo.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Accessors(chain = true)
-@Table(name = "main.tb_test")
+@Table(name = "demo.tb_test")
 public class DemoDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class DemoDO implements Serializable {
 
     @Id
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "value")
     private String value;
