@@ -1,35 +1,37 @@
-package github.botapi.demo.service;
+package github.botapi.main.service;
 
-import github.botapi.demo.model.DemoModel;
-import github.botapi.demo.dao.DemoDao;
+import github.botapi.main.dao.DemoDAO;
+import github.botapi.main.model.DemoDO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Repository
 public class DemoService {
 
-    private final DemoDao dao;
+    private final DemoDAO dao;
 
     @Autowired
-    public DemoService(DemoDao dao) {
+    public DemoService(DemoDAO dao) {
         this.dao = dao;
     }
 
-    public boolean insert(DemoModel model) {
+    public boolean insert(DemoDO model) {
         return dao.insert(model) > 0;
     }
 
-    public DemoModel select(int id) {
+    public DemoDO select(int id) {
         return dao.select(id);
     }
 
-    public List<DemoModel> selectAll() {
+    public List<DemoDO> selectAll() {
         return dao.selectAll();
     }
 
-    public boolean updateValue(DemoModel model) {
+    public boolean updateValue(DemoDO model) {
         return dao.updateValue(model) > 0;
     }
 

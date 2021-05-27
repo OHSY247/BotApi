@@ -1,7 +1,7 @@
-package github.botapi.demo.controller;
+package github.botapi.main.controller;
 
-import github.botapi.demo.model.DemoModel;
-import github.botapi.demo.service.DemoService;
+import github.botapi.main.model.DemoDO;
+import github.botapi.main.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class DemoController {
      */
     @GetMapping("/demos")
     @ResponseBody
-    public List<DemoModel> allDemo() {
+    public List<DemoDO> allDemo() {
         return service.selectAll();
     }
     // @ResponseBody 如果返回的是对象 会自动转为json字符串，如果返回的是String 则返回该字符串
