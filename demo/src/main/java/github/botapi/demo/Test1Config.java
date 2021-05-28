@@ -6,11 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
@@ -26,7 +26,14 @@ public class Test1Config {
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource.test1")
     public DataSource testDataSource() {
-        return DataSourceBuilder.create().build();
+        //return DataSourceBuilder.create().build();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.sqlite.JDBC");
+        dataSource.setUrl("jdbc:sqlite:/Users/straycamel/alibaba-inc/idea-workspace/BotApi/demo.db");
+        dataSource.setUsername("");
+        dataSource.setPassword("");
+
+    return dataSource;
     }
     @Primary
     @Bean(name = "test1SqlSessionFactory")

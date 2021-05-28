@@ -4,6 +4,7 @@ import github.botapi.demo.model.DemoDO;
 import github.botapi.demo.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -13,9 +14,10 @@ import java.util.List;
  * @date 2021/5/28
  */
 @RestController
+@RequestMapping("/demo")
 public class Controller {
-    @Autowired
     private DemoService demoService;
+    @Autowired
     public Controller(DemoService demoService2){
         demoService = demoService2;
     }

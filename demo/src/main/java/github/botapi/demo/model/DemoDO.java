@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Accessors(chain = true)
-@Table(name = "demo.tb_test")
+@Table(name = "main.tb_test")
 public class DemoDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
