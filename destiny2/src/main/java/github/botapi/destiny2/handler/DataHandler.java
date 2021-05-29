@@ -20,6 +20,7 @@ public class DataHandler extends BackEndHttpRequest {
     public static String DOWNLOAD_MANIFEST_DIR = System.getProperty("user.dir")+"/data/downloadManifest";
     public static String DATA_MANIFEST_DIR = System.getProperty("user.dir")+"/data/destiny2Manifest";
     public static AuthoritativeApi authApi=new AuthoritativeApi();
+    public static String DEFAULT_LANGUAGE = "zh-chs";
     /**
      * fixedRate 是 long 类型，表示任务执行的间隔毫秒数，以上代码中的定时任务每 3 秒执行一次。
      * @Scheduled(fixedRate = 3000)

@@ -1,5 +1,4 @@
-/*
-package github.botapi.destiny2;
+package github.botapi.destiny2.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -8,57 +7,51 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-*/
+import static github.botapi.util.handler.DirHandler.getFiles;
+
 /**
  * @author straycamel
- * @date 2021/5/28
- *//*
+ * @date 2021/5/29
+ * 命运2简体中文数据源配置文件
+ */
 
 @Configuration //注册到springboot 容器中
-@MapperScan(basePackages = "github.botapi",
-            sqlSessionTemplateRef  = "D2SqlSessionTemplate")
-public class DataConfig {
-    @Bean(name = "D2DataSource")
-    @Primary
+@MapperScan(basePackages = "github.botapi.destiny2.dao.zh_chs",
+            sqlSessionTemplateRef  = "zh_chsSqlSessionTemplate")
+public class ZhChsDataConfig {
+    @Bean(name = "zh_chsDataSource")
     public DataSource testDataSource() {
-        */
-/**
-         * 配置数据源
-         *//*
-
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
-        dataSource.setUrl("jdbc:sqlite:./demo.db");
+        String datafile = getFiles("data/destiny2Manifest/zh-chs/").get(0);
+        System.out.println("xxxxxxxxx"+String.format("jdbc:sqlite:%s",datafile));
+        dataSource.setUrl(String.format("jdbc:sqlite:%s",datafile));
         dataSource.setUsername("");
         dataSource.setPassword("");
     return dataSource;
     }
-    @Primary
-    @Bean(name = "D2SqlSessionFactory")
+    @Bean(name = "zh_chsSqlSessionFactory")
     public SqlSessionFactory testSqlSessionFactory
-        (@Qualifier("D2DataSource") DataSource dataSource) throws Exception {
+        (@Qualifier("zh_chsDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         return bean.getObject();
     }
-    @Bean(name = "D2TransactionManager")
-    @Primary
+    @Bean(name = "zh_chsTransactionManager")
     public DataSourceTransactionManager testTransactionManager
-        (@Qualifier("D2DataSource") DataSource dataSource) {
+        (@Qualifier("zh_chsDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-    @Bean(name = "D2SqlSessionTemplate")
-    @Primary
+    @Bean(name = "zh_chsSqlSessionTemplate")
     public SqlSessionTemplate testSqlSessionTemplate
-        (@Qualifier("D2SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+        (@Qualifier("zh_chsSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
 
-*/
+

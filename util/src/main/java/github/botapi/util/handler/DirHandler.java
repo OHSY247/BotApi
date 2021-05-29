@@ -11,7 +11,7 @@ import java.util.function.Function;
  */
 public class DirHandler {
     /**
-     * 获取文件夹下所有文件
+     * 只获取某个文件夹下所有文件
      * */
     public static ArrayList<String> getFiles(String path) {
         ArrayList<String> files = new ArrayList<String>();

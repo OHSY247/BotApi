@@ -1,9 +1,16 @@
-package github.botapi.destiny2;
+package github.botapi.destiny2.controller;
 
 import github.botapi.destiny2.handler.DataHandler;
 import github.botapi.destiny2.handler.LightGGBO;
+import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
+import github.botapi.destiny2.service.zh_chs.ZhChsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author straycamel
@@ -11,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/Destiny2")
 public class Destiny2Controller {
+
+    private ZhChsService zhChsService;
+
     public Destiny2Controller(){
         System.out.println("每次启动时-进行所有的数据更新-可能耗时有点久，但是数据为项目所需");
         Thread t = new Thread(() -> {
@@ -19,6 +29,21 @@ public class Destiny2Controller {
         });
         t.start();
     }
+    @Autowired
+    public Destiny2Controller(ZhChsService service) {
+        this.zhChsService = service;
+    }
+    /**
+     * 接口测试
+     * @return JSON 字符串
+     * @ResponseBody 如果返回的是对象 会自动转为json字符串，如果返回的是String 则返回该字符串
+     */
+    @GetMapping("/seasons")
+    @ResponseBody
+    public List<DestinySeasonDefinitionDO> allDemo() {
+        return zhChsService.selectAll();
+    }
+
     /**
      * 启动模块所需要加载的方法
      */

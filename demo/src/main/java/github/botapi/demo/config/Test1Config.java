@@ -1,4 +1,4 @@
-package github.botapi.demo;
+package github.botapi.demo.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -7,7 +7,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -22,7 +21,6 @@ import javax.sql.DataSource;
             sqlSessionTemplateRef  = "test1SqlSessionTemplate")
 public class Test1Config {
     @Bean(name = "test1DataSource")
-    @Primary
     //@ConfigurationProperties(prefix = "spring.datasource.test1")
     public DataSource testDataSource() {
         //return DataSourceBuilder.create().build();
@@ -36,7 +34,6 @@ public class Test1Config {
         dataSource.setPassword("");
     return dataSource;
     }
-    @Primary
     @Bean(name = "test1SqlSessionFactory")
     public SqlSessionFactory testSqlSessionFactory
         (@Qualifier("test1DataSource") DataSource dataSource) throws Exception {
@@ -45,13 +42,11 @@ public class Test1Config {
         return bean.getObject();
     }
     @Bean(name = "test1TransactionManager")
-    @Primary
     public DataSourceTransactionManager testTransactionManager
         (@Qualifier("test1DataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
     @Bean(name = "test1SqlSessionTemplate")
-    @Primary
     public SqlSessionTemplate testSqlSessionTemplate
         (@Qualifier("test1SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
