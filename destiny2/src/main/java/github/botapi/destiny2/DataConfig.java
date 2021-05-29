@@ -1,4 +1,5 @@
-package github.botapi.demo;
+/*
+package github.botapi.destiny2;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -13,22 +14,24 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
+*/
 /**
  * @author straycamel
  * @date 2021/5/28
- */
+ *//*
+
 @Configuration //注册到springboot 容器中
-@MapperScan(basePackages = "github.botapi.demo.dao",
-            sqlSessionTemplateRef  = "test1SqlSessionTemplate")
-public class Test1Config {
-    @Bean(name = "test1DataSource")
+@MapperScan(basePackages = "github.botapi",
+            sqlSessionTemplateRef  = "D2SqlSessionTemplate")
+public class DataConfig {
+    @Bean(name = "D2DataSource")
     @Primary
-    //@ConfigurationProperties(prefix = "spring.datasource.test1")
     public DataSource testDataSource() {
-        //return DataSourceBuilder.create().build();
-        /**
+        */
+/**
          * 配置数据源
-         */
+         *//*
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
         dataSource.setUrl("jdbc:sqlite:./demo.db");
@@ -37,24 +40,25 @@ public class Test1Config {
     return dataSource;
     }
     @Primary
-    @Bean(name = "test1SqlSessionFactory")
+    @Bean(name = "D2SqlSessionFactory")
     public SqlSessionFactory testSqlSessionFactory
-        (@Qualifier("test1DataSource") DataSource dataSource) throws Exception {
+        (@Qualifier("D2DataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         return bean.getObject();
     }
-    @Bean(name = "test1TransactionManager")
+    @Bean(name = "D2TransactionManager")
     @Primary
     public DataSourceTransactionManager testTransactionManager
-        (@Qualifier("test1DataSource") DataSource dataSource) {
+        (@Qualifier("D2DataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-    @Bean(name = "test1SqlSessionTemplate")
+    @Bean(name = "D2SqlSessionTemplate")
     @Primary
     public SqlSessionTemplate testSqlSessionTemplate
-        (@Qualifier("test1SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+        (@Qualifier("D2SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
 
+*/
