@@ -39,6 +39,7 @@ test.*
 tmp/*
 !tmp/**/*.md
 !tmp/*.md
+!tmp/tmp.jpg
 data/**
 !data/*
 !data/*.md

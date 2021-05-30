@@ -1,6 +1,7 @@
 package github.botapi.destiny2.service;
 
 import github.botapi.destiny2.dao.zh_chs.DestinyInventoryItemDefinitionDO;
+import github.botapi.destiny2.handler.LightGGBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Repository
-public class ItemService {
+public class ItemService extends LightGGBO {
 
     private final DestinyInventoryItemDefinitionDO dao;
 
@@ -28,4 +29,8 @@ public class ItemService {
     public long selectIdByName(String name) {
         return dao.selectIdByName(name);
     }
+    /**
+     * 通过物品获取lightgg截图
+     */
+    //public
 }

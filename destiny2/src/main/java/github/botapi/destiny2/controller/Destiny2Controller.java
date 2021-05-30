@@ -5,17 +5,25 @@ import github.botapi.destiny2.handler.LightGGBO;
 import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
 import github.botapi.destiny2.service.ItemService;
 import github.botapi.destiny2.service.ZhChsService;
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
-
 /**
  * @author straycamel
  */
 @RestController
 @RequestMapping("/Destiny2")
-public class Destiny2Controller {
+public class Destiny2Controller  {
 
     private ZhChsService zhChsService;
 
@@ -34,14 +42,49 @@ public class Destiny2Controller {
         this.zhChsService = zhChsService;
         this.itemService = itemService;
     }
+    private String DEFAULT_IMG = "tmp/tmp.jpg";
 
+	/**
+	 *
+	 * @return
+	 * @throws IOException
+	 */
+    @GetMapping(value = "/item", produces = MediaType.IMAGE_JPEG_VALUE, params = {"name", "type"})
+	@ResponseBody
+	public ResponseEntity<byte[]> getItemByName2(@RequestParam("name") String name, @RequestParam("type") String type) throws IOException {
+        // 读取网络图片
+		//new一个URL对象
+        /*URL url = new URL("/tmp/test.png");
+        //打开链接
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        //设置请求方式为"GET"
+        conn.setRequestMethod("GET");
+        //超时响应时间为5秒
+        conn.setConnectTimeout(5 * 1000);
+        //通过输入流获取图片数据
+        InputStream in = conn.getInputStream();
+        */
+        // 读取磁盘本地图片
+        File file = new File(DEFAULT_IMG);
+        InputStream in = new FileInputStream(file);
+
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_JPEG);
+
+			return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers,
+					HttpStatus.OK);
+		} finally {
+			IOUtils.closeQuietly(in);
+		}
+	}
     /**
      * @return JSON 字符串
      * @ResponseBody 如果返回的是对象 会自动转为json字符串，如果返回的是String 则返回该字符串
      */
-    @GetMapping("/item")
+    @GetMapping(value="/item", produces = MediaType.APPLICATION_JSON_VALUE, params = {"name"})
     @ResponseBody
-    public long getIdByName(@RequestParam("name") String name) {
+    public long getItemByName(@RequestParam("name") String name) {
         return itemService.selectIdByName(name);
     }
     /**
