@@ -3,12 +3,10 @@ package github.botapi.destiny2.controller;
 import github.botapi.destiny2.handler.DataHandler;
 import github.botapi.destiny2.handler.LightGGBO;
 import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
-import github.botapi.destiny2.service.zh_chs.ZhChsService;
+import github.botapi.destiny2.service.ItemService;
+import github.botapi.destiny2.service.ZhChsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,8 @@ public class Destiny2Controller {
 
     private ZhChsService zhChsService;
 
+    private ItemService itemService;
+
     public Destiny2Controller(){
         System.out.println("每次启动时-进行所有的数据更新-可能耗时有点久，但是数据为项目所需");
         Thread t = new Thread(() -> {
@@ -30,11 +30,21 @@ public class Destiny2Controller {
         t.start();
     }
     @Autowired
-    public Destiny2Controller(ZhChsService service) {
-        this.zhChsService = service;
+    public Destiny2Controller(ZhChsService zhChsService,ItemService itemService) {
+        this.zhChsService = zhChsService;
+        this.itemService = itemService;
+    }
+
+    /**
+     * @return JSON 字符串
+     * @ResponseBody 如果返回的是对象 会自动转为json字符串，如果返回的是String 则返回该字符串
+     */
+    @GetMapping("/item")
+    @ResponseBody
+    public long getIdByName(@RequestParam("name") String name) {
+        return itemService.selectIdByName(name);
     }
     /**
-     * 接口测试
      * @return JSON 字符串
      * @ResponseBody 如果返回的是对象 会自动转为json字符串，如果返回的是String 则返回该字符串
      */
