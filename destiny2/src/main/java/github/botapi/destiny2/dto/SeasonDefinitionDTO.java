@@ -1,10 +1,10 @@
 package github.botapi.destiny2.dto;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.util.Map;
 
 /**
  * @author straycamel
@@ -18,9 +18,9 @@ public class SeasonDefinitionDTO {
     private Long id;
 
     @Column(name = "json")
-    private JSONObject json = null;
+    private Map<String, Object> json = null;
 
-    public SeasonDefinitionDTO(Long id,JSONObject json){
+    public SeasonDefinitionDTO(Long id,Map<String, Object> json){
         this.setId(id);
         this.setJson(json);
     }
