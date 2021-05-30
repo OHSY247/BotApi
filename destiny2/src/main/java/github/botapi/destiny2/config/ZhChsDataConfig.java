@@ -29,7 +29,7 @@ public class ZhChsDataConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
         String datafile = getFiles("data/destiny2Manifest/zh-chs/").get(0);
-        System.out.println("xxxxxxxxx"+String.format("jdbc:sqlite:%s",datafile));
+        System.out.println("loading sqlite data source: "+String.format("jdbc:sqlite:%s",datafile));
         dataSource.setUrl(String.format("jdbc:sqlite:%s",datafile));
         dataSource.setUsername("");
         dataSource.setPassword("");
