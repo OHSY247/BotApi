@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
+import static github.botapi.destiny2.handler.DataHandler.checkManifest;
 import static github.botapi.util.handler.DirHandler.getFiles;
 
 /**
@@ -24,6 +25,9 @@ import static github.botapi.util.handler.DirHandler.getFiles;
 @MapperScan(basePackages = "github.botapi.destiny2.dao.zh_chs",
             sqlSessionTemplateRef  = "zh_chsSqlSessionTemplate")
 public class ZhChsDataConfig {
+    public ZhChsDataConfig(){
+        checkManifest();
+    }
     @Bean(name = "zh_chsDataSource")
     public DataSource testDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
