@@ -4,6 +4,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
@@ -20,6 +21,8 @@ import java.util.concurrent.TimeUnit;
  * @author straycamel
  * @date 2021/5/18
  * Selenium 模拟浏览器
+ * https://github.com/OHSY247/BotApi/issues/5
+ * 已弃用
  */
 public class SeleniumBO {
     private final String systemName;
@@ -32,7 +35,7 @@ public class SeleniumBO {
     public static String CHROMEDRIVER = "chromedriver";
     public static String ROOT_STOCK_PATH = "util/src/main/java/github/botapi/util/app/selenium";
     public static String FILE_PATH = new File(System.getProperty("user.dir"), ROOT_STOCK_PATH).toString();
-
+    private final ChromeOptions options;
     private final ChromeDriver chromeDriver;
 
     @Override
@@ -58,8 +61,53 @@ public class SeleniumBO {
         this.systemName = props.getProperty("os.name");
         this.systemArch = props.getProperty("os.arch");
         this.systemVersion = props.getProperty("os.version");
+        this.options = new ChromeOptions();
+        // 添加UA
+        options.addArguments("user-agent='MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'");
 
-        this.chromeDriver = new ChromeDriver();
+        // 指定浏览器分辨率
+        //options.addArguments("window-size=1920x3000");
+
+        // 谷歌文档提到需要加上这个属性来规避bug
+        //options.addArguments("--disable-gpu");
+
+         // 隐藏滚动条, 应对一些特殊页面
+            //options.addArguments("--hide-scrollbars");
+
+        // 不加载图片, 提升速度
+        //options.addArguments("blink-settings=imagesEnabled=false");
+
+        // 浏览器不提供可视化页面. linux下如果系统不支持可视化不加这条会启动失败
+        //options.addArguments("--headless");
+        //options.addArguments("headless=true");
+        //options.addArguments("devtools=true");
+        options.addArguments("--disable-web-security");
+
+        // 以最高权限运行
+        options.addArguments("--no-sandbox");
+
+        /*// 手动指定使用的浏览器位置
+        options.binary_location = r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+
+        #添加crx插件
+        options.add_extension("d:\crx\AdBlock_v2.17.crx")
+
+        // 禁用JavaScript
+        options.addArguments("--disable-javascript")
+
+        // 设置开发者模式启动，该模式下webdriver属性为正常值
+        options.add_experimental_options("excludeSwitches', ['enable-automation'])
+
+        // 禁用浏览器弹窗
+        prefs = {
+            'profile.default_content_setting_values' :  {
+                'notifications' : 2
+             }
+        options.add_experimental_options("prefs',prefs)
+
+                }  */
+
+        this.chromeDriver = new ChromeDriver(this.options);
     }
     /**
      * 解析URL 进行截图并保存到自动生成的文件路径
@@ -99,12 +147,15 @@ public class SeleniumBO {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            /*File srcFile = ((TakesScreenshot)chromeDriver).getScreenshotAs(OutputType.FILE);
-            //通过FileUtils中的copyFile()方法保存getScreenshotAs()返回的文件;"屏幕截图"即时保存截图的文件夹
+            /*ByteArrayInputStream imageArrayStream = null;
+            TakesScreenshot takesScreenshot = (TakesScreenshot) new Augmenter().augment(wd);
             try {
-                Files.copy(srcFile, new File(pathname));
+                imageArrayStream = new ByteArrayInputStream(takesScreenshot.getScreenshotAs(OutputType.BYTES));
+                return ImageIO.read(imageArrayStream);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new ImageReadException("Can not parse screenshot data", e);
+            } finally {
+                IOUtils.closeQuietly(imageArrayStream);
             }*/
         } finally {
             chromeDriver.quit();

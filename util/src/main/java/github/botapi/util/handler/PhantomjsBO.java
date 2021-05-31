@@ -10,6 +10,8 @@ import java.util.function.Function;
  * @author straycamel
  * @date 2021/5/18
  * phantomjs脚本下载页 https://phantomjs.org/download.html
+ * https://github.com/OHSY247/BotApi/issues/5
+ * 已弃用
  */
 public class PhantomjsBO {
     private String systemName, systemArch,systemVersion;

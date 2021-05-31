@@ -32,5 +32,10 @@ public class ItemService extends LightGGBO {
     /**
      * 通过物品获取lightgg截图
      */
+    public String screenshotLightGG(String name){
+        long itemID = selectIdByName(name);
+
+        return generateImgPathByUrl(itemID);
+    }
     //public
 }

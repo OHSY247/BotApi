@@ -5,6 +5,8 @@ import java.io.*;
 /**
  * @author straycamel
  * @date 2021/5/18
+ * https://github.com/OHSY247/BotApi/issues/5
+ * 已弃用
  * take streenshot of web page
  * java没有太好的网页截图工具，我们这里使用js编写，并用java调用js脚本进行截图并生成图片，返回图片url
  */
@@ -17,16 +19,17 @@ public class WebScreenshotBO {
     }
 
     /**
-     * 使用phantomjs 通过url生成图片并保存到本地resImgPath
+     * 使用 phantomjs 通过url生成图片并保存到本地resImgPath
      * @params url 需要截图的url
      * @params resImgPath 截图后保存的体制
      */
-    public String generateImgPath(String url, String resImgPath) throws IOException {
+    public String generateImgPathByUrl(String url, String resImgPath) throws IOException {
         PhantomjsBO phantomjsBO = new PhantomjsBO();
         String phantomjsApp = phantomjsBO.fetchPath();
         // 使用Runtime类执行终端命令
         String BLANK = "  ";
         try {
+            System.out.println(String.format("phantomjs对网页:%s进行截图ing...",url));
             Process process = Runtime.getRuntime().exec(phantomjsApp + BLANK
                     + WEB_SCREENSHOT_JS + BLANK
                     + url + BLANK
@@ -37,12 +40,12 @@ public class WebScreenshotBO {
             String tmp = "";
             while ((tmp = reader.readLine()) != null ) {
 
-                /*if (reader != null) {
+                if (reader != null) {
                     reader.close();
                 }
                 if (process != null ) {
                     process.destroy();
-                }*/
+                }
 
             }
             reader.close();

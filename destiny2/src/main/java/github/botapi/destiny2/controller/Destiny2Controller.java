@@ -45,33 +45,19 @@ public class Destiny2Controller  {
     private String DEFAULT_IMG = "tmp/tmp.jpg";
 
 	/**
-	 *
+	 * 查询物品返回lightgg网站截图
 	 * @return
 	 * @throws IOException
 	 */
     @GetMapping(value = "/item", produces = MediaType.IMAGE_JPEG_VALUE, params = {"name", "type"})
 	@ResponseBody
 	public ResponseEntity<byte[]> getItemByName2(@RequestParam("name") String name, @RequestParam("type") String type) throws IOException {
-        // 读取网络图片
-		//new一个URL对象
-        /*URL url = new URL("/tmp/test.png");
-        //打开链接
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        //设置请求方式为"GET"
-        conn.setRequestMethod("GET");
-        //超时响应时间为5秒
-        conn.setConnectTimeout(5 * 1000);
-        //通过输入流获取图片数据
-        InputStream in = conn.getInputStream();
-        */
         // 读取磁盘本地图片
-        File file = new File(DEFAULT_IMG);
+        File file = new File(itemService.screenshotLightGG(name));
         InputStream in = new FileInputStream(file);
-
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.IMAGE_JPEG);
-
 			return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers,
 					HttpStatus.OK);
 		} finally {
@@ -158,8 +144,8 @@ public class Destiny2Controller  {
      * @params item 支持对itemId和itemName匹配查询
      */
     @RequestMapping("/lightGGItem")
-    public String lightGG(String item){
-        return LightGGBO.generateImgPath(item);
+    public String lightGG(long item){
+        return LightGGBO.generateImgPathByUrl(item);
     }
     /**
      * LightGG 查询物故事/npc等文本介绍信息
