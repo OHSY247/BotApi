@@ -71,7 +71,11 @@ public class AuthoritativeApi extends BackEndHttpRequest {
      * @param dataDir 解压后的文件路径
      */
     public void downloadManifest(String url,String downloadDir, String dataDir){
-        String filePath = downloadFromUrl(url,downloadDir);
-        FileHandler.unZip(new File(filePath),dataDir);
+        try {
+            String filePath = downloadFromUrl(url,downloadDir);
+            FileHandler.unZip(new File(filePath),dataDir);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }

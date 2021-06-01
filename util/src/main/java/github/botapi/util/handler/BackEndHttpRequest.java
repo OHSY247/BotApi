@@ -53,7 +53,8 @@ public class BackEndHttpRequest {
         //文件保存位置
         File saveDir = new File(savePath);
         if(!saveDir.exists()){
-            saveDir.mkdir();
+            boolean result = saveDir.mkdirs();
+            System.out.println("Status = " + result);
         }
         File file = new File(saveDir+File.separator+fileName);
         if (file.exists()){
