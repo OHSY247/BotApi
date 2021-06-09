@@ -22,7 +22,7 @@ public class BackEndHttpRequest {
      * @param savePath
      * @return 解析后的文件名
      */
-    public String downloadFromUrl(String urlStr, String savePath){
+    public static String downloadFromUrl(String urlStr, String savePath){
         try {
             if (urlStr==null || !urlStr.contains(SEPARATOR)){
             throw new IOException("下载链接无法解析文件名");

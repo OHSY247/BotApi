@@ -1,9 +1,9 @@
 package github.botapi.destiny2.controller;
 
-import github.botapi.destiny2.handler.DataHandler;
-import github.botapi.destiny2.handler.LightGGBO;
 import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
+import github.botapi.destiny2.service.DataService;
 import github.botapi.destiny2.service.ItemService;
+import github.botapi.destiny2.service.LightGGService;
 import github.botapi.destiny2.service.ZhChsService;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,17 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/Destiny2")
-public class Destiny2Controller  {
-
+public class D2Controller  {
+    @Autowired
     private ZhChsService zhChsService;
-
+    @Autowired
     private ItemService itemService;
+    @Autowired
+    private DataService dataService;
+    @Autowired
+    private LightGGService lightGGService;
 
-    public Destiny2Controller(){
+    public D2Controller(){
         System.out.println("每次启动时-进行所有的数据更新-可能耗时有点久，但是数据为项目所需");
         Thread t = new Thread(() -> {
             System.out.println("start new thread!");
@@ -37,11 +41,7 @@ public class Destiny2Controller  {
         });
         t.start();
     }
-    @Autowired
-    public Destiny2Controller(ZhChsService zhChsService,ItemService itemService) {
-        this.zhChsService = zhChsService;
-        this.itemService = itemService;
-    }
+
     private String DEFAULT_IMG = "tmp/tmp.jpg";
 
 	/**
@@ -87,8 +87,8 @@ public class Destiny2Controller  {
      * 启动模块所需要加载的方法
      */
     public void start(){
-        DataHandler.dailyRefresh();
-        DataHandler.weeklyRefresh();
+        dataService.dailyRefresh();
+        dataService.weeklyRefresh();
     }
     /**
      * 测试接口
@@ -97,7 +97,6 @@ public class Destiny2Controller  {
      */
     @RequestMapping("/test")
     public String test(){
-        DataHandler.test();
         return "destiny2 test";
     }
     /**
@@ -145,7 +144,7 @@ public class Destiny2Controller  {
      */
     @RequestMapping("/lightGGItem")
     public String lightGG(long item){
-        return LightGGBO.generateImgPathByUrl(item);
+        return lightGGService.generateImgPathByUrl(item);
     }
     /**
      * LightGG 查询物故事/npc等文本介绍信息

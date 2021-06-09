@@ -1,9 +1,11 @@
 package github.botapi.destiny2.config;
 
+import github.botapi.destiny2.service.DataService;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +14,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-import static github.botapi.destiny2.handler.DataHandler.checkManifest;
 import static github.botapi.util.handler.DirHandler.getFiles;
 
 /**
@@ -25,11 +26,14 @@ import static github.botapi.util.handler.DirHandler.getFiles;
 @MapperScan(basePackages = "github.botapi.destiny2.dao.zh_chs",
             sqlSessionTemplateRef  = "zh_chsSqlSessionTemplate")
 public class ZhChsDataConfig {
+    @Autowired
+    private DataService dataService;
     public ZhChsDataConfig(){
-        checkManifest();
+        //dataService.checkManifest();
     }
     @Bean(name = "zh_chsDataSource")
     public DataSource testDataSource() {
+        dataService.checkManifest();
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
         String datafile = getFiles("data/destiny2Manifest/zh-chs/").get(0);
