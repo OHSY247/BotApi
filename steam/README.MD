@@ -4,7 +4,7 @@ steam 开发接口包装一层
 
 
 - steam api app 注册接口https://steamcommunity.com/dev/apikey
-- steam api 文档 https://steamapi.xpaw.me/
+- steam api 文档 https://steamapi.xpaw.me/--https://partner.steamgames.com/doc/webapi/I
 
 暂时开发注册的key
 ```shell
