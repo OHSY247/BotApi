@@ -18,4 +18,9 @@ public class SuccessResponseDTO<T> extends BaseResponseDTO {
     public SuccessResponseDTO(String message, T data) {
         super(NetworkEnum.SUCCESS.getResponseCode(), message, data);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

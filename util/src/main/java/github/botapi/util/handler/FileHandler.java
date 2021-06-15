@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-
+/**
+ * @author straycamel
+ * @date 2021/6/15
+ */
 public class FileHandler {
     private static final int BUFFER_SIZE = 2 * 1024;
 

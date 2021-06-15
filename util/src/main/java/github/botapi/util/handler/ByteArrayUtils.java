@@ -9,7 +9,9 @@ import java.io.*;
 import java.util.Optional;
 
 /**
- * Created by Jason on 2017/1/3.
+ *
+ * @author straycamel
+ * @date 2017/1/3
  */
 public class ByteArrayUtils {
 

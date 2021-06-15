@@ -45,7 +45,7 @@ public interface HttpRequestService {
      * @param url 发送请求的URL
      * @return 远程资源的响应结果
      */
-    String Get(String url);
+    String get(String url);
 
     /**
      * 向指定的URL发送GET方法的请求-自定义请求头
@@ -54,7 +54,7 @@ public interface HttpRequestService {
      * @param headers 自定义请求头
      * @return 远程资源的响应结果
      */
-    String Get(String url, Map<String, String> headers);
+    String get(String url, Map<String, String> headers);
 
     /**
      * 向指定的URL发送GET方法的请求
@@ -63,7 +63,7 @@ public interface HttpRequestService {
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式
      * @return 远程资源的响应结果
      */
-    String Get(String url, String param);
+    String get(String url, String param);
 
     /**
      * 向指定的URL发送POST方法的请求
@@ -72,5 +72,5 @@ public interface HttpRequestService {
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式
      * @return 远程资源的响应结果
      */
-    String Post(String url, String param);
+    String post(String url, String param);
 }

@@ -32,6 +32,7 @@ public class D2ApiServiceImpl implements D2ApiService {
     private Map<String, String> D2Headers = AuthoritativeApiConstant.getAPIKey();
 
 
+    @Override
     public Long getSteamIDByD2(String name) {
         SearchDestinyPlayerDTO responseDto = SearchDestinyPlayer(name);
         if (MembershipType.Steam.getTypeID().equals(responseDto.getResponse().get(0).getMembershipType())) {
@@ -41,6 +42,7 @@ public class D2ApiServiceImpl implements D2ApiService {
         return null;
     }
 
+    @Override
     public Long parseSteamID(Long membershipId) {
         try {
             Document doc = Jsoup.connect(AuthoritativeApiConstant.getProfileUrl(membershipId)).get();
@@ -69,14 +71,14 @@ public class D2ApiServiceImpl implements D2ApiService {
     }
 
     public SearchDestinyPlayerDTO SearchDestinyPlayer(String name) {
-        String res = httpRequestService.Get(AuthoritativeApiConstant.getSEARCHDESTINYPLAYER(name, -1), D2Headers);
+        String res = httpRequestService.get(AuthoritativeApiConstant.getSEARCHDESTINYPLAYER(name, -1), D2Headers);
         SearchDestinyPlayerDTO responseDto = JSON.parseObject(res, SearchDestinyPlayerDTO.class);
         System.out.println("responseDto = " + responseDto);
         return responseDto;
     }
 
     public SearchDestinyPlayerDTO SearchDestinyPlayer(Long steamID) {
-        String res = httpRequestService.Get(SteamDevConstant.STEAM_WEB_URL_GETPLAYERSUMMARIES, String.format("key=%s&steamids=%d", SteamDevConstant.STEAM_WEB_API_KEY, steamID));
+        String res = httpRequestService.get(SteamDevConstant.STEAM_WEB_URL_GETPLAYERSUMMARIES, String.format("key=%s&steamids=%d", SteamDevConstant.STEAM_WEB_API_KEY, steamID));
         System.out.println("res = " + res);
         GetPlayerSummariesDTO responseDto = JSON.parseObject(res, GetPlayerSummariesDTO.class);
         System.out.println("responseDto = " + responseDto);

@@ -127,7 +127,6 @@ public class BackEndHttpRequest {
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            //connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
             if (iterator != null) {
@@ -198,9 +197,7 @@ public class BackEndHttpRequest {
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            //connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
-            //5、建立实际的连接
             connection.connect();
             //获取所有响应头字段
             Map<String, List<String>> map = connection.getHeaderFields();
@@ -264,8 +261,6 @@ public class BackEndHttpRequest {
             connection.setDoOutput(true);
 
             //5、建立实际的连接
-            //connection.connect();
-            //获取URLConnection对象对应的输出流
             out = new PrintWriter(connection.getOutputStream());
             //发送请求参数
             out.print(param);

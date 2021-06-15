@@ -72,7 +72,6 @@ public class SeleniumBO {
         // 浏览器不提供可视化页面. linux下如果系统不支持可视化不加这条会启动失败
         //options.addArguments("--headless");
         //options.addArguments("headless=true");
-        //options.addArguments("devtools=true");
         options.addArguments("--disable-web-security");
 
         // 以最高权限运行
@@ -135,8 +134,7 @@ public class SeleniumBO {
             chromeDriver.manage().window().maximize();
             chromeDriver.get(url);
             //等待页面加载完成
-            new WebDriverWait(chromeDriver, 300).until(chromeDriver -> ((JavascriptExecutor) chromeDriver)
-                    .executeScript("return document.readyState").equals("complete"));
+            new WebDriverWait(chromeDriver, 300).until(chromeDriver -> "complete".equals(((JavascriptExecutor) chromeDriver).executeScript("return document.readyState")));
             JavascriptExecutor jexec = (JavascriptExecutor) chromeDriver;
             int width = ((Long) jexec.executeScript("return document.body.scrollWidth")).intValue();
             int height = ((Long) jexec.executeScript("return document.body.scrollHeight")).intValue();
@@ -150,16 +148,6 @@ public class SeleniumBO {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            /*ByteArrayInputStream imageArrayStream = null;
-            TakesScreenshot takesScreenshot = (TakesScreenshot) new Augmenter().augment(wd);
-            try {
-                imageArrayStream = new ByteArrayInputStream(takesScreenshot.getScreenshotAs(OutputType.BYTES));
-                return ImageIO.read(imageArrayStream);
-            } catch (IOException e) {
-                throw new ImageReadException("Can not parse screenshot data", e);
-            } finally {
-                IOUtils.closeQuietly(imageArrayStream);
-            }*/
         } finally {
             chromeDriver.quit();
         }
@@ -170,6 +158,7 @@ public class SeleniumBO {
         return chromeDriver;
     }
 
+    @Override
     protected void finalize() throws Throwable {
         super.finalize();
         System.out.println(this.toString() + "now finalize:" + System.currentTimeMillis());

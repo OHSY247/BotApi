@@ -17,6 +17,7 @@ import java.util.Map;
  */
 @Service
 public class HttpRequestServiceImpl implements HttpRequestService {
+    @Override
     public String downloadFromUrl(String urlStr, String savePath) {
         try {
             if (urlStr == null || !urlStr.contains(NetworkConstant.SEPARATOR)) {
@@ -38,6 +39,7 @@ public class HttpRequestServiceImpl implements HttpRequestService {
         return filePath;
     }
 
+    @Override
     public void downloadFromUrl(String urlStr, String fileName, String savePath) throws IOException {
         //文件保存位置
         File saveDir = new File(savePath);
@@ -73,6 +75,7 @@ public class HttpRequestServiceImpl implements HttpRequestService {
         }
     }
 
+    @Override
     public byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int len = 0;
@@ -84,7 +87,8 @@ public class HttpRequestServiceImpl implements HttpRequestService {
         return bos.toByteArray();
     }
 
-    public String Get(String url) {
+    @Override
+    public String get(String url) {
         String result = "";
         BufferedReader bufferedReader = null;
         try {
@@ -138,7 +142,8 @@ public class HttpRequestServiceImpl implements HttpRequestService {
         return result;
     }
 
-    public String Get(String url, Map<String, String> headers) {
+    @Override
+    public String get(String url, Map<String, String> headers) {
         String result = "";
         BufferedReader bufferedReader = null;
         try {
@@ -153,7 +158,6 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            //connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
             if (iterator != null) {
@@ -202,7 +206,8 @@ public class HttpRequestServiceImpl implements HttpRequestService {
         return result;
     }
 
-    public String Get(String url, String param) {
+    @Override
+    public String get(String url, String param) {
         String result = "";
         BufferedReader bufferedReader = null;
         try {
@@ -217,9 +222,7 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            //connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
-            //5、建立实际的连接
             connection.connect();
             //获取所有响应头字段
             Map<String, List<String>> map = connection.getHeaderFields();
@@ -256,7 +259,8 @@ public class HttpRequestServiceImpl implements HttpRequestService {
         return result;
     }
 
-    public String Post(String url, String param) {
+    @Override
+    public String post(String url, String param) {
         String result = "";
         BufferedReader bufferedReader = null;
         PrintWriter out = null;
@@ -276,8 +280,6 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             connection.setDoOutput(true);
 
             //5、建立实际的连接
-            //connection.connect();
-            //获取URLConnection对象对应的输出流
             out = new PrintWriter(connection.getOutputStream());
             //发送请求参数
             out.print(param);

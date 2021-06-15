@@ -28,12 +28,12 @@ public class WebScreenshotBO {
         PhantomjsBO phantomjsBO = new PhantomjsBO();
         String phantomjsApp = phantomjsBO.fetchPath();
         // 使用Runtime类执行终端命令
-        String BLANK = "  ";
+        String blank = "  ";
         try {
             System.out.println(String.format("phantomjs对网页:%s进行截图ing...", url));
-            Process process = Runtime.getRuntime().exec(phantomjsApp + BLANK
-                    + WEB_SCREENSHOT_JS + BLANK
-                    + url + BLANK
+            Process process = Runtime.getRuntime().exec(phantomjsApp + blank
+                    + WEB_SCREENSHOT_JS + blank
+                    + url + blank
                     + resImgPath);
 
             InputStream inputStream = process.getInputStream();

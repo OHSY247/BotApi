@@ -40,11 +40,9 @@ public class DirHandler {
 
         for (int i = 0; i < tempList.length; i++) {
             if (tempList[i].isFile()) {
-                // System.out.println("文件：" + tempList[i]);
                 files.add(tempList[i].toString());
             }
             if (tempList[i].isDirectory()) {
-                // System.out.println("文件夹：" + tempList[i]);
                 files.addAll(getRecurseFiles(tempList[i].toString()));
             }
         }
@@ -61,13 +59,11 @@ public class DirHandler {
 
         for (int i = 0; i < tempList.length; i++) {
             if (tempList[i].isFile()) {
-                // System.out.println("文件：" + tempList[i]);
                 if (filterHandler.apply(tempList[i].toString())) {
                     files.add(tempList[i].toString());
                 }
             }
             if (tempList[i].isDirectory()) {
-                // System.out.println("文件夹：" + tempList[i]);
                 files.addAll(getRecurseFiles(tempList[i].toString(), filterHandler));
             }
         }

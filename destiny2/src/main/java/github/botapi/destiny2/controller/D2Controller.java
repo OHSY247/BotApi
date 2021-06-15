@@ -139,7 +139,6 @@ public class D2Controller {
      */
     @RequestMapping("/daily")
     public String daily() {
-        //System.out.println(1/0);
         return "destiny2 daily";
     }
 
