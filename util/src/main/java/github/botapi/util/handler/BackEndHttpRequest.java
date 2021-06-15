@@ -14,52 +14,56 @@ import java.util.Map;
  * https://www.cnblogs.com/Moming0/p/10677940.html
  */
 public class BackEndHttpRequest {
-    private static final int  BUFFER_SIZE = 2 * 1024;
-    public static String SEPARATOR="/";
+    private static final int BUFFER_SIZE = 2 * 1024;
+    public static String SEPARATOR = "/";
+
     /**
      * 从网络Url中下载文件-自动构造文件名
+     *
      * @param urlStr-fileName设定为以"/"分割url取最后一串字符
      * @param savePath
      * @return 解析后的文件名
      */
-    public static String downloadFromUrl(String urlStr, String savePath){
+    public static String downloadFromUrl(String urlStr, String savePath) {
         try {
-            if (urlStr==null || !urlStr.contains(SEPARATOR)){
-            throw new IOException("下载链接无法解析文件名");
-        }
+            if (urlStr == null || !urlStr.contains(SEPARATOR)) {
+                throw new IOException("下载链接无法解析文件名");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         String[] urlArray = urlStr.split(SEPARATOR);
-        String fileName = urlArray[urlArray.length-1];
+        String fileName = urlArray[urlArray.length - 1];
         try {
-            downloadFromUrl(urlStr,fileName,savePath);
+            downloadFromUrl(urlStr, fileName, savePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String filePath = new File(savePath,fileName).toString();
-        System.out.println("filePath:"+filePath);
+        String filePath = new File(savePath, fileName).toString();
+        System.out.println("filePath:" + filePath);
         return filePath;
     }
+
     /**
      * 从网络Url中下载文件
      * 若文件已存在-提醒即可
+     *
      * @param urlStr
      * @param fileName
      * @param savePath
      * @throws IOException
      */
-    public static void  downloadFromUrl(String urlStr, String fileName, String savePath) throws IOException{
+    public static void downloadFromUrl(String urlStr, String fileName, String savePath) throws IOException {
         //文件保存位置
         File saveDir = new File(savePath);
-        if(!saveDir.exists()){
+        if (!saveDir.exists()) {
             boolean result = saveDir.mkdirs();
             System.out.println("Status = " + result);
         }
-        File file = new File(saveDir+File.separator+fileName);
-        if (file.exists()){
-            System.out.println("notice:"+urlStr+" already download");
-        }else{
+        File file = new File(saveDir + File.separator + fileName);
+        if (file.exists()) {
+            System.out.println("notice:" + urlStr + " already download");
+        } else {
             URL url = new URL(urlStr);
             URLConnection conn = url.openConnection();
             //设置超时间为3秒
@@ -73,36 +77,40 @@ public class BackEndHttpRequest {
             byte[] getData = readInputStream(inputStream);
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(getData);
-            if(fos!=null){
+            if (fos != null) {
                 fos.close();
             }
-            if(inputStream!=null){
+            if (inputStream != null) {
                 inputStream.close();
             }
-            System.out.println("info:"+url+" download success");
+            System.out.println("info:" + url + " download success");
 
         }
     }
+
     /**
      * 从输入流中获取字节数组
+     *
      * @param inputStream
      * @return
      * @throws IOException
      */
-    public static  byte[] readInputStream(InputStream inputStream) throws IOException {
+    public static byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int len = 0;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        while((len = inputStream.read(buffer)) != -1) {
+        while ((len = inputStream.read(buffer)) != -1) {
             bos.write(buffer, 0, len);
         }
         bos.close();
         return bos.toByteArray();
     }
+
     /**
      * 向指定的URL发送GET方法的请求
-     * @param url    发送请求的URL
-     * @return       远程资源的响应结果
+     *
+     * @param url 发送请求的URL
+     * @return 远程资源的响应结果
      */
     public static String sendGet(String url, Map<String, String> headers) {
         String result = "";
@@ -122,11 +130,11 @@ public class BackEndHttpRequest {
             //connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
-            if (iterator !=null){
+            if (iterator != null) {
                 System.out.println(iterator);
                 while (iterator.hasNext()) {
                     Map.Entry<String, String> tmp = iterator.next();
-                    connection.setRequestProperty(tmp.getKey(),tmp.getValue());
+                    connection.setRequestProperty(tmp.getKey(), tmp.getValue());
                 }
             }
 
@@ -167,11 +175,13 @@ public class BackEndHttpRequest {
         }
         return result;
     }
+
     /**
      * 向指定的URL发送GET方法的请求
-     * @param url    发送请求的URL
-     * @param param  请求参数，请求参数应该是 name1=value1&name2=value2 的形式
-     * @return       远程资源的响应结果
+     *
+     * @param url   发送请求的URL
+     * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式
+     * @return 远程资源的响应结果
      */
     public static String sendGet(String url, String param) {
         String result = "";
@@ -195,14 +205,14 @@ public class BackEndHttpRequest {
             //获取所有响应头字段
             Map<String, List<String>> map = connection.getHeaderFields();
             //遍历所有的响应头字段
-            for(String key : map.keySet()) {
+            for (String key : map.keySet()) {
                 System.out.println(key + "---->" + map.get(key));
             }
 
             //6、定义BufferedReader输入流来读取URL的响应内容 ，UTF-8是后续自己加的设置编码格式，也可以去掉这个参数
-            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String line = "";
-            while(null != (line = bufferedReader.readLine())) {
+            while (null != (line = bufferedReader.readLine())) {
                 result += line;
             }
 //            int tmp;
@@ -210,27 +220,29 @@ public class BackEndHttpRequest {
 //                result += (char)tmp;
 //            }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             // TODO: handle exception
-            System.out.println("发送GET请求出现异常！！！"  + e);
+            System.out.println("发送GET请求出现异常！！！" + e);
             e.printStackTrace();
-        }finally {        //使用finally块来关闭输入流
+        } finally {        //使用finally块来关闭输入流
             try {
-                if(null != bufferedReader) {
+                if (null != bufferedReader) {
                     bufferedReader.close();
                 }
-            }catch (Exception e2) {
+            } catch (Exception e2) {
                 // TODO: handle exception
                 e2.printStackTrace();
             }
         }
         return result;
     }
+
     /**
      * 向指定的URL发送POST方法的请求
-     * @param url    发送请求的URL
-     * @param param  请求参数，请求参数应该是 name1=value1&name2=value2 的形式
-     * @return       远程资源的响应结果
+     *
+     * @param url   发送请求的URL
+     * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式
+     * @return 远程资源的响应结果
      */
     public static String sendPost(String url, String param) {
         String result = "";
@@ -262,24 +274,24 @@ public class BackEndHttpRequest {
             //
 
             //6、定义BufferedReader输入流来读取URL的响应内容
-            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String line;
-            while(null != (line = bufferedReader.readLine())) {
+            while (null != (line = bufferedReader.readLine())) {
                 result += line;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             // TODO: handle exception
-            System.out.println("发送POST请求出现异常！！！"  + e);
+            System.out.println("发送POST请求出现异常！！！" + e);
             e.printStackTrace();
-        }finally {        //使用finally块来关闭输出流、输入流
+        } finally {        //使用finally块来关闭输出流、输入流
             try {
-                if(null != out) {
+                if (null != out) {
                     out.close();
                 }
-                if(null != bufferedReader) {
+                if (null != bufferedReader) {
                     bufferedReader.close();
                 }
-            }catch (Exception e2) {
+            } catch (Exception e2) {
                 // TODO: handle exception
                 e2.printStackTrace();
             }

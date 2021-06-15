@@ -17,7 +17,7 @@ public class PlayerInfoServiceImpl implements PlayerInfoService {
     @Autowired
     private D2ApiService d2ApiService;
 
-    public InfoDTO getPlayerInfo(String name){
+    public InfoDTO getPlayerInfo(String name) {
         if (name == null) {
             return null;
         }

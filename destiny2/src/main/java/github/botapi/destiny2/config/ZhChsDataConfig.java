@@ -24,40 +24,45 @@ import static github.botapi.util.handler.DirHandler.getFiles;
 
 @Configuration //注册到springboot 容器中
 @MapperScan(basePackages = "github.botapi.destiny2.dao.zh_chs",
-            sqlSessionTemplateRef  = "zh_chsSqlSessionTemplate")
+        sqlSessionTemplateRef = "zh_chsSqlSessionTemplate")
 public class ZhChsDataConfig {
     @Autowired
     private DataService dataService;
-    public ZhChsDataConfig(){
+
+    public ZhChsDataConfig() {
         //dataService.checkManifest();
     }
+
     @Bean(name = "zh_chsDataSource")
     public DataSource testDataSource() {
         dataService.checkManifest();
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
         String datafile = getFiles("data/destiny2Manifest/zh-chs/").get(0);
-        System.out.println("loading sqlite data source: "+String.format("jdbc:sqlite:%s",datafile));
-        dataSource.setUrl(String.format("jdbc:sqlite:%s",datafile));
+        System.out.println("loading sqlite data source: " + String.format("jdbc:sqlite:%s", datafile));
+        dataSource.setUrl(String.format("jdbc:sqlite:%s", datafile));
         dataSource.setUsername("");
         dataSource.setPassword("");
-    return dataSource;
+        return dataSource;
     }
+
     @Bean(name = "zh_chsSqlSessionFactory")
     public SqlSessionFactory testSqlSessionFactory
-        (@Qualifier("zh_chsDataSource") DataSource dataSource) throws Exception {
+            (@Qualifier("zh_chsDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         return bean.getObject();
     }
+
     @Bean(name = "zh_chsTransactionManager")
     public DataSourceTransactionManager testTransactionManager
-        (@Qualifier("zh_chsDataSource") DataSource dataSource) {
+            (@Qualifier("zh_chsDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
+
     @Bean(name = "zh_chsSqlSessionTemplate")
     public SqlSessionTemplate testSqlSessionTemplate
-        (@Qualifier("zh_chsSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+            (@Qualifier("zh_chsSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }

@@ -23,7 +23,7 @@ public class SeasonDefinitionDTO {
     @Column(name = "json")
     private Map<String, Object> json = null;
 
-    public SeasonDefinitionDTO(Long id,Map<String, Object> json){
+    public SeasonDefinitionDTO(Long id, Map<String, Object> json) {
         this.setId(id);
         this.setJson(json);
     }

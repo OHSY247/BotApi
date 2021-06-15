@@ -15,8 +15,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(scanBasePackages = {"github.botapi"})
 @EnableScheduling
 public class MainApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(MainApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MainApplication.class, args);
+    }
 
 }

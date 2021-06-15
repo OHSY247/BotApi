@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author straycamel
  * @date 2021/6/15
- *
  */
 @Data
 @AllArgsConstructor
@@ -17,6 +16,7 @@ import java.util.List;
 public abstract class GetPlayerSummariesDTO {
 
     private ResponseEntity response;
+
     @Data
     public static class ResponseEntity {
         private List<PlayerDTO> players;

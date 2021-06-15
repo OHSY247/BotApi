@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 /**
  * @author straycamel
  * @date 2021/6/9
@@ -21,19 +22,20 @@ import java.util.Map;
 @Service
 public class ZhChsServiceImpl implements ZhChsService {
     @Autowired
-    private  DestinySeasonDefinitionDAO destinySeasonDefinitionDAO;
+    private DestinySeasonDefinitionDAO destinySeasonDefinitionDAO;
 
     public List<DestinySeasonDefinitionDO> selectAll() {
         List resDto = new ArrayList();
-        for (DestinySeasonDefinitionDO item:destinySeasonDefinitionDAO.selectAll()) {
-            JSONObject obj=null;
+        for (DestinySeasonDefinitionDO item : destinySeasonDefinitionDAO.selectAll()) {
+            JSONObject obj = null;
             Map<String, Object> map1 = null;
             try {
                 String content = new String(item.getJson(), "UTF-8");
                 JSONObject json = new JSONObject();
                 json.put("content", content);
                 //obj = (JSONObject) JSON.parse(json.toJSONString().getBytes("UTF-8"));
-                map1 = JSON.parseObject(content, new TypeReference<Map<String, Object>>(){});
+                map1 = JSON.parseObject(content, new TypeReference<Map<String, Object>>() {
+                });
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

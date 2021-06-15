@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LightGGServiceImpl implements LightGGService {
-    public String generateImgPathByUrl(long itemID){
+    public String generateImgPathByUrl(long itemID) {
         return "tmp/tmp.jpg";
     }
 }

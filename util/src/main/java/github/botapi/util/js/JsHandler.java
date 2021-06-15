@@ -12,7 +12,7 @@ import java.io.FileReader;
  * @date 2021/5/31
  */
 public class JsHandler {
-    public static void handler(){
+    public static void handler() {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
         try {
             engine.eval(new FileReader("/Users/straycamel/alibaba-inc/idea-workspace/BotApi/util/src/main/java/github/botapi/util/js/script.js"));

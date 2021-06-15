@@ -16,16 +16,18 @@ public class ItemServiceImpl implements ItemService {
     private LightGGService lightGGService;
     @Autowired
     private DestinyInventoryItemDefinitionDO destinyInventoryItemDefinitionDO;
+
     /**
      * @return 物品id
      */
     public long selectIdByName(String name) {
         return destinyInventoryItemDefinitionDO.selectIdByName(name);
     }
+
     /**
      * 通过物品获取lightgg截图
      */
-    public String screenshotLightGG(String name){
+    public String screenshotLightGG(String name) {
         long itemID = selectIdByName(name);
 
         return lightGGService.generateImgPathByUrl(itemID);

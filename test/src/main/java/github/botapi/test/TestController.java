@@ -13,11 +13,12 @@ public class TestController {
 
     /**
      * 测试接口
+     *
      * @author
      * @date
      */
     @RequestMapping("/test")
-    public String test(){
+    public String test() {
         return "destiny2 test";
     }
 

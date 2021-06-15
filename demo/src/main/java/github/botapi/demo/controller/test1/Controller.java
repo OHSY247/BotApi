@@ -17,12 +17,14 @@ import java.util.List;
 @RequestMapping("/demo")
 public class Controller {
     private DemoService demoService;
+
     @Autowired
-    public Controller(DemoService demoService2){
+    public Controller(DemoService demoService2) {
         demoService = demoService2;
     }
+
     @GetMapping("/test")
-    public List<DemoDO> test1(){
+    public List<DemoDO> test1() {
 
         return demoService.selectAll();
     }

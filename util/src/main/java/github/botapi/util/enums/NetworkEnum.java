@@ -15,6 +15,8 @@ public enum NetworkEnum {
      */
     SUCCESS(200, "success");
 
-    @Getter private Integer responseCode;
-    @Getter private String msg;
+    @Getter
+    private Integer responseCode;
+    @Getter
+    private String msg;
 }

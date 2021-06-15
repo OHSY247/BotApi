@@ -20,6 +20,7 @@ public class WebScreenshotBO {
 
     /**
      * 使用 phantomjs 通过url生成图片并保存到本地resImgPath
+     *
      * @params url 需要截图的url
      * @params resImgPath 截图后保存的体制
      */
@@ -29,7 +30,7 @@ public class WebScreenshotBO {
         // 使用Runtime类执行终端命令
         String BLANK = "  ";
         try {
-            System.out.println(String.format("phantomjs对网页:%s进行截图ing...",url));
+            System.out.println(String.format("phantomjs对网页:%s进行截图ing...", url));
             Process process = Runtime.getRuntime().exec(phantomjsApp + BLANK
                     + WEB_SCREENSHOT_JS + BLANK
                     + url + BLANK
@@ -38,12 +39,12 @@ public class WebScreenshotBO {
             InputStream inputStream = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String tmp = "";
-            while ((tmp = reader.readLine()) != null ) {
+            while ((tmp = reader.readLine()) != null) {
 
                 if (reader != null) {
                     reader.close();
                 }
-                if (process != null ) {
+                if (process != null) {
                     process.destroy();
                 }
 

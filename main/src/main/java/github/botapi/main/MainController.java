@@ -1,4 +1,5 @@
 package github.botapi.main;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 class MainController {
     @RequestMapping("start")
-    public String showAll(){
+    public String showAll() {
         return "start success";
     }
 }

@@ -21,7 +21,6 @@ public interface SteamIDService {
      * @date 2021/6/13
      * 通过SteamID获取玩家名称-或者其他数据
      * https://partner.steamgames.com/doc/webapi/ISteamUser#GetPlayerSummaries
-
      */
     String GetPlayerSummaries();
 }

@@ -6,7 +6,8 @@ package github.botapi.destiny2.dao.zh_chs;
  */
 
 import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

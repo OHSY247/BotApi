@@ -25,6 +25,7 @@ public class DemoController {
 
     /**
      * 接口测试
+     *
      * @return JSON 字符串
      * @ResponseBody 如果返回的是对象 会自动转为json字符串，如果返回的是String 则返回该字符串
      */
@@ -35,7 +36,7 @@ public class DemoController {
     }
 
     @RequestMapping("/start")
-    public String showAll(){
+    public String showAll() {
         return "start success";
     }
 }

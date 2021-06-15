@@ -1,6 +1,5 @@
 package github.botapi.destiny2.service;
 
-import github.botapi.destiny2.dto.SearchDestinyPlayerDTO;
 import github.botapi.destiny2.dto.playerInfo.InfoDTO;
 
 /**

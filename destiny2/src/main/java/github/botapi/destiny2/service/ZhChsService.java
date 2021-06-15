@@ -8,6 +8,7 @@ public interface ZhChsService {
 
     /**
      * 将数据对象返序列化
+     *
      * @return
      */
     List<DestinySeasonDefinitionDO> selectAll();

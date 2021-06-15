@@ -5,11 +5,11 @@ import github.botapi.util.service.HttpRequestService;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.Iterator;
-import java.util.Map;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author straycamel
@@ -17,37 +17,38 @@ import java.util.List;
  */
 @Service
 public class HttpRequestServiceImpl implements HttpRequestService {
-    public String downloadFromUrl(String urlStr, String savePath){
+    public String downloadFromUrl(String urlStr, String savePath) {
         try {
-            if (urlStr==null || !urlStr.contains(NetworkConstant.SEPARATOR)){
-            throw new IOException("下载链接无法解析文件名");
-        }
+            if (urlStr == null || !urlStr.contains(NetworkConstant.SEPARATOR)) {
+                throw new IOException("下载链接无法解析文件名");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         String[] urlArray = urlStr.split(NetworkConstant.SEPARATOR);
 
-        String fileName = urlArray[urlArray.length-1];
+        String fileName = urlArray[urlArray.length - 1];
         try {
-            downloadFromUrl(urlStr,fileName,savePath);
+            downloadFromUrl(urlStr, fileName, savePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String filePath = new File(savePath,fileName).toString();
-        System.out.println("filePath:"+filePath);
+        String filePath = new File(savePath, fileName).toString();
+        System.out.println("filePath:" + filePath);
         return filePath;
     }
-    public void  downloadFromUrl(String urlStr, String fileName, String savePath) throws IOException{
+
+    public void downloadFromUrl(String urlStr, String fileName, String savePath) throws IOException {
         //文件保存位置
         File saveDir = new File(savePath);
-        if(!saveDir.exists()){
+        if (!saveDir.exists()) {
             boolean result = saveDir.mkdirs();
             System.out.println("Status = " + result);
         }
-        File file = new File(saveDir+ File.separator+fileName);
-        if (file.exists()){
-            System.out.println("notice:"+urlStr+" already download");
-        }else{
+        File file = new File(saveDir + File.separator + fileName);
+        if (file.exists()) {
+            System.out.println("notice:" + urlStr + " already download");
+        } else {
             URL url = new URL(urlStr);
             URLConnection conn = url.openConnection();
             //设置超时间为3秒
@@ -61,27 +62,28 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             byte[] getData = readInputStream(inputStream);
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(getData);
-            if(fos!=null){
+            if (fos != null) {
                 fos.close();
             }
-            if(inputStream!=null){
+            if (inputStream != null) {
                 inputStream.close();
             }
-            System.out.println("info:"+url+" download success");
+            System.out.println("info:" + url + " download success");
 
         }
     }
 
-    public  byte[] readInputStream(InputStream inputStream) throws IOException {
+    public byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int len = 0;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        while((len = inputStream.read(buffer)) != -1) {
+        while ((len = inputStream.read(buffer)) != -1) {
             bos.write(buffer, 0, len);
         }
         bos.close();
         return bos.toByteArray();
     }
+
     public String Get(String url) {
         String result = "";
         BufferedReader bufferedReader = null;
@@ -154,11 +156,11 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             //connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
             Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
-            if (iterator !=null){
+            if (iterator != null) {
                 System.out.println(iterator);
                 while (iterator.hasNext()) {
                     Map.Entry<String, String> tmp = iterator.next();
-                    connection.setRequestProperty(tmp.getKey(),tmp.getValue());
+                    connection.setRequestProperty(tmp.getKey(), tmp.getValue());
                 }
             }
 
@@ -222,14 +224,14 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             //获取所有响应头字段
             Map<String, List<String>> map = connection.getHeaderFields();
             //遍历所有的响应头字段
-            for(String key : map.keySet()) {
+            for (String key : map.keySet()) {
                 System.out.println(key + "---->" + map.get(key));
             }
 
             //6、定义BufferedReader输入流来读取URL的响应内容 ，UTF-8是后续自己加的设置编码格式，也可以去掉这个参数
-            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String line = "";
-            while(null != (line = bufferedReader.readLine())) {
+            while (null != (line = bufferedReader.readLine())) {
                 result += line;
             }
 //            int tmp;
@@ -237,16 +239,16 @@ public class HttpRequestServiceImpl implements HttpRequestService {
 //                result += (char)tmp;
 //            }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             // TODO: handle exception
-            System.out.println("发送GET请求出现异常！！！"  + e);
+            System.out.println("发送GET请求出现异常！！！" + e);
             e.printStackTrace();
-        }finally {        //使用finally块来关闭输入流
+        } finally {        //使用finally块来关闭输入流
             try {
-                if(null != bufferedReader) {
+                if (null != bufferedReader) {
                     bufferedReader.close();
                 }
-            }catch (Exception e2) {
+            } catch (Exception e2) {
                 // TODO: handle exception
                 e2.printStackTrace();
             }
@@ -284,24 +286,24 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             //
 
             //6、定义BufferedReader输入流来读取URL的响应内容
-            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String line;
-            while(null != (line = bufferedReader.readLine())) {
+            while (null != (line = bufferedReader.readLine())) {
                 result += line;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             // TODO: handle exception
-            System.out.println("发送POST请求出现异常！！！"  + e);
+            System.out.println("发送POST请求出现异常！！！" + e);
             e.printStackTrace();
-        }finally {        //使用finally块来关闭输出流、输入流
+        } finally {        //使用finally块来关闭输出流、输入流
             try {
-                if(null != out) {
+                if (null != out) {
                     out.close();
                 }
-                if(null != bufferedReader) {
+                if (null != bufferedReader) {
                     bufferedReader.close();
                 }
-            }catch (Exception e2) {
+            } catch (Exception e2) {
                 // TODO: handle exception
                 e2.printStackTrace();
             }
