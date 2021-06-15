@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 /**
  * @author straycamel
  * @date 2021/6/15
+ * 玩家用户信息查询
  */
 @Service
 public class PlayerInfoServiceImpl implements PlayerInfoService {
     @Autowired
     private D2ApiService d2ApiService;
 
+    @Override
     public InfoDTO getPlayerInfo(String name) {
         if (name == null) {
             return null;

@@ -8,10 +8,11 @@ import lombok.Data;
  * 玩家基本信息
  */
 @Data
-public class InfoDTO {
-    private Long SteamID;
-    private String Name;
+public class InfoDTO extends BaseInfoDTO {
+    public InfoDTO(){
+        super();
+    }
+    private Long steamID;
+    private Long MembershipId;
     private String Platform;
-    private PveInfoDTO pve;
-    private PvpInfoDTO pvp;
 }

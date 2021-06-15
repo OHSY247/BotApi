@@ -20,6 +20,7 @@ public class ItemServiceImpl implements ItemService {
     /**
      * @return 物品id
      */
+    @Override
     public long selectIdByName(String name) {
         return destinyInventoryItemDefinitionDO.selectIdByName(name);
     }
@@ -27,6 +28,7 @@ public class ItemServiceImpl implements ItemService {
     /**
      * 通过物品获取lightgg截图
      */
+    @Override
     public String screenshotLightGG(String name) {
         long itemID = selectIdByName(name);
 

@@ -1,8 +1,8 @@
 package github.botapi.destiny2.service.impl;
 
-import github.botapi.destiny2.constant.AuthoritativeApiConstant;
+import github.botapi.destiny2.constant.D2ApiConstant;
 import github.botapi.destiny2.constant.DataConstant;
-import github.botapi.destiny2.service.AuthoritativeApiService;
+import github.botapi.destiny2.service.D2ApiService;
 import github.botapi.destiny2.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,7 +22,7 @@ import java.util.Map;
 @Service
 public class DataServiceImpl implements DataService {
     @Autowired
-    private AuthoritativeApiService authoritativeApiService;
+    private D2ApiService d2ApiService;
 
     @Override
     @Scheduled(cron = "0 15 1 * * ?")
@@ -30,24 +30,24 @@ public class DataServiceImpl implements DataService {
         System.out.println("日任务-任务执行时间：" + LocalDateTime.now());
         checkManifest();
         // todo 代码检查，auApi对象的属性会被销毁吗，这里可能是个坑/bug
-        System.out.println("代码检查，auApi对象的属性会被销毁吗，" + System.getenv(AuthoritativeApiConstant.VERSION_FLAG));
+        System.out.println("代码检查，auApi对象的属性会被销毁吗，" + System.getenv(D2ApiConstant.VERSION_FLAG));
     }
 
     @Override
     public void checkManifest() {
-        Map<String, String> content = authoritativeApiService.getLastManifestContent();
+        Map<String, String> content = d2ApiService.getLastManifestContent();
         if (content == null) {
             return;
         } else {
             /*FileHandler.clearDir(new File(DOWNLOAD_MANIFEST_DIR));
             FileHandler.clearDir(new File(DATA_MANIFEST_DIR));*/
-            System.out.println("Manifest文件夹清空-数据进行重新下载；version：" + System.getenv(AuthoritativeApiConstant.VERSION_FLAG));
+            System.out.println("Manifest文件夹清空-数据进行重新下载；version：" + System.getenv(D2ApiConstant.VERSION_FLAG));
             Iterator<Map.Entry<String, String>> iterator = content.entrySet().iterator();
             if (iterator != null) {
                 // todo: 并行多线程执行
                 while (iterator.hasNext()) {
                     Map.Entry<String, String> tmp = iterator.next();
-                    authoritativeApiService.downloadManifest(AuthoritativeApiConstant.ROOT + tmp.getValue(), DataConstant.DOWNLOAD_MANIFEST_DIR + DataConstant.SEPARATOR + tmp.getKey(), DataConstant.DATA_MANIFEST_DIR + DataConstant.SEPARATOR + tmp.getKey());
+                    d2ApiService.downloadManifest(D2ApiConstant.ROOT + tmp.getValue(), DataConstant.DOWNLOAD_MANIFEST_DIR + DataConstant.SEPARATOR + tmp.getKey(), DataConstant.DATA_MANIFEST_DIR + DataConstant.SEPARATOR + tmp.getKey());
                 }
             }
         }

@@ -18,12 +18,14 @@ import java.util.Map;
 /**
  * @author straycamel
  * @date 2021/6/9
+ * 命运2 源数据库crud调用
  */
 @Service
 public class ZhChsServiceImpl implements ZhChsService {
     @Autowired
     private DestinySeasonDefinitionDAO destinySeasonDefinitionDAO;
 
+    @Override
     public List<DestinySeasonDefinitionDO> selectAll() {
         List resDto = new ArrayList();
         for (DestinySeasonDefinitionDO item : destinySeasonDefinitionDAO.selectAll()) {
@@ -33,7 +35,6 @@ public class ZhChsServiceImpl implements ZhChsService {
                 String content = new String(item.getJson(), "UTF-8");
                 JSONObject json = new JSONObject();
                 json.put("content", content);
-                //obj = (JSONObject) JSON.parse(json.toJSONString().getBytes("UTF-8"));
                 map1 = JSON.parseObject(content, new TypeReference<Map<String, Object>>() {
                 });
             } catch (UnsupportedEncodingException e) {

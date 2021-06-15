@@ -7,7 +7,7 @@ import java.util.Map;
  * @author straycamel
  * @date 2021/6/8
  */
-public class AuthoritativeApiConstant {
+public class D2ApiConstant {
     /**
      * @author straycamel
      * @date 2021/6/9
@@ -24,20 +24,20 @@ public class AuthoritativeApiConstant {
      * @date 2021/6/9
      * 命运2版本号存储在本地的key值
      */
-    public static String VERSION_FLAG = "DESTINY2_MAIFEST_VERSION";
+    public static String VERSION_FLAG = "DESTINY2_MANIFEST_VERSION";
     /**
      * @author straycamel
      * @date 2021/6/15
      * https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/娃哈哈店长/
      * 通过名字获取玩家基本信息
      */
-    private static String SEARCHDESTINYPLAYER = BASE + "/Destiny2/SearchDestinyPlayer";
+    private static final String SEARCHDESTINYPLAYER = BASE + "/Destiny2/SearchDestinyPlayer";
     /**
      * @author straycamel
      * @date 2021/6/15https://www.bungie.net/Platform/User/GetMembershipsById/4611686018490704250/-1/
      * 获取玩家的信息
      */
-    private static String GETMEMBERSHIPSBYID = BASE + "/User/GetMembershipsById";
+    private static final String GETMEMBERSHIPSBYID = BASE + "/User/GetMembershipsById";
     /**
      * @author straycamel
      * @date 2021/6/15
@@ -48,7 +48,7 @@ public class AuthoritativeApiConstant {
     public static Map<String, String> getAPIKey() {
         Map<String, String> Headers;
         Headers = new HashMap<>();
-        Headers.put(AuthoritativeApiConstant.HEADER_AUTH_KEY, "09ab307be6e34bf1b80f403d4e20a9fc");
+        Headers.put(D2ApiConstant.HEADER_AUTH_KEY, "09ab307be6e34bf1b80f403d4e20a9fc");
         return Headers;
     }
 
