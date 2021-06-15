@@ -8,7 +8,6 @@ import github.botapi.util.handler.FileHandler;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 /**
  * @author straycamel
@@ -17,17 +16,9 @@ import java.util.Map;
 @Service
 public class AuthoritativeApiServiceImpl implements AuthoritativeApiService {
 
-    private Map<String, String> Headers;
+    private Map<String, String> Headers = AuthoritativeApiConstant.getAPIKey();
 
-    public AuthoritativeApiServiceImpl(){
-        setAPIKey();
-    }
-    
-    public void setAPIKey(){
-         Headers = new HashMap<>();
-         Headers.put(AuthoritativeApiConstant.HEADER_AUTH_KEY,"09ab307be6e34bf1b80f403d4e20a9fc");
-    }
-    
+
     public String getManifest(){
         return BackEndHttpRequest.sendGet(AuthoritativeApiConstant.MANIFEST, Headers);
     }

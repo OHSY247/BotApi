@@ -23,6 +23,7 @@
         <module>destiny2</module>
         <module>main</module>
         <module>util</module>
+        <module>steam</module>
     </modules>
     <dependencies>
         <dependency>

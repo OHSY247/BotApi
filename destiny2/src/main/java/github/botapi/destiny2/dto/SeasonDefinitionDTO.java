@@ -1,6 +1,7 @@
 package github.botapi.destiny2.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -11,6 +12,8 @@ import java.util.Map;
  * @date 2021/5/30
  */
 @Data
+@NoArgsConstructor
+// @AllArgsConstructor
 public class SeasonDefinitionDTO {
 
     @Id

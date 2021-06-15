@@ -1,10 +1,10 @@
 package github.botapi.destiny2.controller;
 
+import github.botapi.destiny2.dto.SearchDestinyPlayerDTO;
+import github.botapi.destiny2.dto.playerInfo.InfoDTO;
 import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
-import github.botapi.destiny2.service.DataService;
-import github.botapi.destiny2.service.ItemService;
-import github.botapi.destiny2.service.LightGGService;
-import github.botapi.destiny2.service.ZhChsService;
+import github.botapi.destiny2.service.*;
+import github.botapi.util.dto.response.SuccessResponseDTO;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -32,14 +32,17 @@ public class D2Controller  {
     private DataService dataService;
     @Autowired
     private LightGGService lightGGService;
-
+    @Autowired
+    private D2ApiService d2ApiService;
+    @Autowired
+    private PlayerInfoService playInfoService;
     public D2Controller(){
         System.out.println("每次启动时-进行所有的数据更新-可能耗时有点久，但是数据为项目所需");
-        Thread t = new Thread(() -> {
+        /*Thread t = new Thread(() -> {
             System.out.println("start new thread!");
             start();
         });
-        t.start();
+        t.start();*/
     }
 
     private String DEFAULT_IMG = "tmp/tmp.jpg";
@@ -162,7 +165,20 @@ public class D2Controller  {
      * @params platformType 平台种类 通过没举止区分，默认全部
      * @params type {all, pvp, pve, raid...} 通过枚举值查询不同给的信息
      */
-    @RequestMapping("/userInfo")
-    public String userInfo(){ return "destiny2 userInfo test";}
+    @RequestMapping("/playerInfo")
+    public Object userInfo(
+            @RequestParam(value = "name",required = false) String name,
+            @RequestParam(value = "platformType", required = false) String platformType,
+            @RequestParam(value = "platform", required = false) String platform,
+            @RequestParam(value = "steamID", required = false) Long steamID
+    ){
+        if (steamID != null) {
+            SearchDestinyPlayerDTO res = d2ApiService.SearchDestinyPlayer(steamID);
+            return new SuccessResponseDTO<>("destiny2 userInfo test", res);
+        }
+        InfoDTO res = playInfoService.getPlayerInfo("娃哈哈店长");
+        System.out.println(res);
+        return new SuccessResponseDTO("destiny2 userInfo test",res);
+    }
 }
 

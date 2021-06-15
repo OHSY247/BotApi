@@ -40,10 +40,10 @@ tmp/*
 !tmp/**/*.md
 !tmp/*.md
 !tmp/tmp.jpg
-data/**
-!data/*
-!data/*.md
-!data/**/*.md
+**/data/**
+!**/data/*
+!**/data/*.md
+!**/data/**/*.md
 !**/*.md
 log/*
 !log/*.md

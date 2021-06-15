@@ -12,8 +12,8 @@ public interface  AuthoritativeApiService {
      * @author straycamel
      * @date 2021/6/9
      * 构造请求头加入 HEADER_AUTH_KEY 参数
-     */
-    void setAPIKey();
+     * @return
+    Map<String, String> setAPIKey();*/
     
     /**
      * @author straycamel
