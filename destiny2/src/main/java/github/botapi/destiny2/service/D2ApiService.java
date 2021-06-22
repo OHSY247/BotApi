@@ -1,6 +1,6 @@
 package github.botapi.destiny2.service;
 
-import github.botapi.destiny2.dto.SearchDestinyPlayerDTO;
+import github.botapi.destiny2.dto.d2api.playerInfo.SearchDestinyPlayerDTO;
 
 import java.util.Map;
 
@@ -68,4 +68,10 @@ public interface D2ApiService {
      * 通过steamid
      */
     SearchDestinyPlayerDTO SearchDestinyPlayer(Long Id);
+
+    /**
+     * @author straycamel
+     * @date 2021/6/15
+     */
+    // SearchDestinyPlayerDTO
 }

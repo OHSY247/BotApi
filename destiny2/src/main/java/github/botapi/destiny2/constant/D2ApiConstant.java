@@ -36,14 +36,22 @@ public class D2ApiConstant {
      */
     private static String ProfileUrl = ROOT + "/en/Profile";
     /**
-     * 获取玩家基础数据--主要为了获取玩家
+     * 获取玩家数据
      * https://www.bungie.net/Platform/Destiny2/-1/Profile/4611686018490704250/LinkedProfiles/
      */
     private static final String LinkedProfilesUrl = BASE+"/Destiny2/&d/Profile/&d/LinkedProfiles/";
 
+    /**
+     *
+     */
+    private static final String mergedDeletedCharactersUrl = BASE+"/Destiny2/%d/Account/%d/Stats/";
+    public static String getMergedDeletedCharactersUrl(Long membershipType, Long membershipId) {
+        return String.format(LinkedProfilesUrl, membershipType, membershipId);
+    }
     public static String getLinkedProfilesUrl(Long membershipType, Long membershipId) {
         return String.format(LinkedProfilesUrl, membershipType, membershipId);
     }
+
     public static String getProfileUrl(Long membershipId) {
         return String.format(ProfileUrl + "/%d", membershipId);
     }

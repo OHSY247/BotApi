@@ -1,4 +1,4 @@
-package github.botapi.destiny2.dto;
+package github.botapi.destiny2.dto.d2api.playerInfo;
 
 import java.util.List;
 

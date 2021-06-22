@@ -1,4 +1,4 @@
-package github.botapi.destiny2.dto.playerInfo;
+package github.botapi.destiny2.dto.botapi.playerInfo;
 
 import lombok.Data;
 

@@ -3,7 +3,8 @@ package github.botapi.destiny2.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import github.botapi.destiny2.constant.D2ApiConstant;
-import github.botapi.destiny2.dto.SearchDestinyPlayerDTO;
+import github.botapi.destiny2.dto.d2api.playerInfo.MergedDeletedCharactersDTO;
+import github.botapi.destiny2.dto.d2api.playerInfo.SearchDestinyPlayerDTO;
 import github.botapi.destiny2.enums.MembershipType;
 import github.botapi.destiny2.service.D2ApiService;
 import github.botapi.steam.service.constant.SteamDevConstant;
@@ -31,50 +32,6 @@ import java.util.regex.Pattern;
 @Service
 public class D2ApiServiceImpl implements D2ApiService {
     private Map<String, String> Headers = D2ApiConstant.getAPIKey();
-
-
-    @Override
-    public String getManifest() {
-        return BackEndHttpRequest.sendGet(D2ApiConstant.MANIFEST, Headers);
-    }
-
-    @Override
-    public Map<String, String> getLastManifestContent() {
-        JSONObject object = JSONObject.parseObject(getManifest());
-        if (object.getString("Message").equals(D2ApiConstant.SUCCESS_MSG)) {
-            String Version = System.getenv(D2ApiConstant.VERSION_FLAG);
-            JSONObject response = object.getJSONObject("Response");
-            String lastVersion = (String) response.get("version");
-            System.out.printf("Manifest 数据检查-当前version：%s，最新version：%s\n", Version, lastVersion);
-
-            if (Version != null && Version.equals(lastVersion)) {
-                System.out.println("manifest 数据已为最新");
-            } else {
-                Map<String, String> mobileWorldContentPaths = JSONObject.toJavaObject(response.getJSONObject("mobileWorldContentPaths"), Map.class);
-                System.setProperty(D2ApiConstant.VERSION_FLAG, lastVersion);
-                return mobileWorldContentPaths;
-            }
-
-        } else {
-            System.out.println("manifest 数据获取错误; Message: " + object.get("Message"));
-        }
-        return null;
-    }
-
-    @Override
-    public void downloadManifest(String url, String downloadDir, String dataDir) {
-        try {
-            String filePath = BackEndHttpRequest.downloadFromUrl(url, downloadDir);
-            FileHandler.unZip(new File(filePath), dataDir);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    @Autowired
-    private HttpRequestService httpRequestService;
-
-    private Map<String, String> D2Headers = D2ApiConstant.getAPIKey();
-
 
     @Override
     public Long getSteamIDByD2(String name) {
@@ -125,9 +82,59 @@ public class D2ApiServiceImpl implements D2ApiService {
     @Override
     public SearchDestinyPlayerDTO SearchDestinyPlayer(Long steamID) {
         String res = httpRequestService.get(SteamDevConstant.STEAM_WEB_URL_GETPLAYERSUMMARIES, String.format("key=%s&steamids=%d", SteamDevConstant.STEAM_WEB_API_KEY, steamID));
-        System.out.println("res = " + res);
         GetPlayerSummariesDTO responseDto = JSON.parseObject(res, GetPlayerSummariesDTO.class);
         System.out.println("responseDto = " + responseDto);
-        return SearchDestinyPlayer("娃哈哈店长");
+        return SearchDestinyPlayer(responseDto.getResponse().getPlayers().get(0).getPersonaname());
     }
+
+    public MergedDeletedCharactersDTO getMergedDeletedCharacters(Long membershipType, Long membershipId) {
+        String res = BackEndHttpRequest.sendGet(D2ApiConstant.getMergedDeletedCharactersUrl(membershipType, membershipId), Headers);
+        MergedDeletedCharactersDTO resDTO = JSON.parseObject(res, MergedDeletedCharactersDTO.class);
+        return resDTO;
+    }
+
+    @Override
+    public String getManifest() {
+        return BackEndHttpRequest.sendGet(D2ApiConstant.MANIFEST, Headers);
+    }
+
+    @Override
+    public Map<String, String> getLastManifestContent() {
+        JSONObject object = JSONObject.parseObject(getManifest());
+        if (object.getString("Message").equals(D2ApiConstant.SUCCESS_MSG)) {
+            String Version = System.getenv(D2ApiConstant.VERSION_FLAG);
+            JSONObject response = object.getJSONObject("Response");
+            String lastVersion = (String) response.get("version");
+            System.out.printf("Manifest 数据检查-当前version：%s，最新version：%s\n", Version, lastVersion);
+
+            if (Version != null && Version.equals(lastVersion)) {
+                System.out.println("manifest 数据已为最新");
+            } else {
+                Map<String, String> mobileWorldContentPaths = JSONObject.toJavaObject(response.getJSONObject("mobileWorldContentPaths"), Map.class);
+                System.setProperty(D2ApiConstant.VERSION_FLAG, lastVersion);
+                return mobileWorldContentPaths;
+            }
+
+        } else {
+            System.out.println("manifest 数据获取错误; Message: " + object.get("Message"));
+        }
+        return null;
+    }
+
+    @Override
+    public void downloadManifest(String url, String downloadDir, String dataDir) {
+        try {
+            String filePath = BackEndHttpRequest.downloadFromUrl(url, downloadDir);
+            FileHandler.unZip(new File(filePath), dataDir);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Autowired
+    private HttpRequestService httpRequestService;
+
+    private Map<String, String> D2Headers = D2ApiConstant.getAPIKey();
+
+
 }

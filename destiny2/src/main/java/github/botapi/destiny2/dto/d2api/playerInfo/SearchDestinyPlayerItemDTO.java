@@ -1,4 +1,4 @@
-package github.botapi.destiny2.dto;
+package github.botapi.destiny2.dto.d2api.playerInfo;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import lombok.Data;
 public class SearchDestinyPlayerItemDTO {
     private String displayName;
     private String membershipId;
-    private int membershipType;
+    private Long membershipType;
     private boolean isPublic;
     private int crossSaveOverride;
     private String iconPath;

@@ -13,14 +13,14 @@ import java.util.Arrays;
  */
 @AllArgsConstructor
 public enum MembershipType {
-    XboxLive(1, "Xbox Live", new String[]{"xbox"}),
-    PlayStationNetwork(2, "PlayStation Network", new String[]{"ps"}),
-    Steam(3, "steam", new String[]{"steam"}),
-    BattleNet(4, "Battle.net", new String[]{"Battle.net"}),
-    ALL(-1, "全平台", new String[]{"all", "全平台"});
+    XboxLive(1L, "Xbox Live", new String[]{"xbox"}),
+    PlayStationNetwork(2L, "PlayStation Network", new String[]{"ps"}),
+    Steam(3L, "steam", new String[]{"steam"}),
+    BattleNet(4L, "Battle.net", new String[]{"Battle.net"}),
+    ALL(-1L, "全平台", new String[]{"all", "全平台"});
 
     @Getter
-    private Integer typeID;
+    private Long typeID;
     @Getter
     private String typeName;
     @Getter
@@ -48,7 +48,7 @@ public enum MembershipType {
      * @date 2021/6/15
      * 通过typeid查询平台枚举
      */
-    public static MembershipType getMembershipType(Integer pageTypeID) {
+    public static MembershipType getMembershipType(Long pageTypeID) {
         if (pageTypeID == null) {
             return MembershipType.ALL;
         }

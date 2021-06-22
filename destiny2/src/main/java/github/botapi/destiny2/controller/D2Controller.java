@@ -1,7 +1,7 @@
 package github.botapi.destiny2.controller;
 
-import github.botapi.destiny2.dto.SearchDestinyPlayerDTO;
-import github.botapi.destiny2.dto.playerInfo.InfoDTO;
+import github.botapi.destiny2.dto.d2api.playerInfo.SearchDestinyPlayerDTO;
+import github.botapi.destiny2.dto.botapi.playerInfo.InfoDTO;
 import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
 import github.botapi.destiny2.service.*;
 import github.botapi.util.dto.response.SuccessResponseDTO;
@@ -198,7 +198,6 @@ public class D2Controller {
             return new SuccessResponseDTO<>("destiny2 userInfo test", res);
         }
         InfoDTO res = playInfoService.getPlayerInfo("娃哈哈店长");
-        System.out.println(res);
         return new SuccessResponseDTO("destiny2 userInfo test", res);
     }
 }

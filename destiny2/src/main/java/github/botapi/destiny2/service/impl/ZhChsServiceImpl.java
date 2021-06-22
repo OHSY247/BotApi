@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import github.botapi.destiny2.dao.zh_chs.DestinySeasonDefinitionDAO;
-import github.botapi.destiny2.dto.SeasonDefinitionDTO;
+import github.botapi.destiny2.dto.d2api.playerInfo.SeasonDefinitionDTO;
 import github.botapi.destiny2.model.DestinySeasonDefinitionDO;
 import github.botapi.destiny2.service.ZhChsService;
 import org.springframework.beans.factory.annotation.Autowired;
