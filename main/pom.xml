@@ -27,12 +27,7 @@
         </dependency>
         <dependency>
             <groupId>github.botapi</groupId>
-            <artifactId>demo</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>github.botapi</groupId>
-            <artifactId>test</artifactId>
+            <artifactId>gameBox</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--spring基础模块-->

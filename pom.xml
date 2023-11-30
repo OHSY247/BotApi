@@ -19,7 +19,7 @@
     </properties>
     <modules>
         <module>demo</module>
-        <module>GameBox</module>
+        <module>gameBox</module>
         <module>destiny2</module>
         <module>main</module>
         <module>util</module>
