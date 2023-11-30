@@ -1,5 +1,7 @@
 package github.botapi.game.server;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Component;
  * @author straycamel
  * @date 2023/11/30
  */
+@Slf4j
 @Component
 public class ProjectZomboid {
     /**
@@ -45,7 +48,8 @@ public class ProjectZomboid {
      * 每N毫秒执行一次，通过端口、日志打印状态判断server活跃状态
      * 若不活跃，触发服务器暂停
      */
+    @Scheduled(fixedDelay = 1000 * 60 * 30L)
     void ServerActivityScan() {
-
+        log.info("ServerActivityScan test");
     }
 }
