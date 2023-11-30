@@ -38,6 +38,7 @@ test.*
 *.class
 *.db
 **/*.db
+.mvn/*
 tmp/*
 !tmp/**/*.md
 !tmp/*.md
