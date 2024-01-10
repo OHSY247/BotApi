@@ -46,12 +46,15 @@ class MainController {
             try {
                 pair = Pair.of("handler" + String.valueOf(i), asyncHandler(i));
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.info("debug async task pipeline updateTask error", e);
             }
             asyncList.add(pair);
         }
         List<Future<Boolean>> list = asyncList.stream().map(Pair::getRight).collect(Collectors.toList());
         CompletableFuture.allOf(list.toArray(new CompletableFuture[list.size()])).whenComplete((res, error) -> {
+            if (error != null) {
+                log.info("debug async task pipeline updateTask error", error);
+            }
             log.info("debug async task pipeline updateTask");
         });
 
@@ -80,8 +83,7 @@ class MainController {
         int batch = 6 / 3;
         int randomIndex = r.nextInt(batch - 1);
         for (int i = 0; i < 3; i++) {
-            // index = ;
-            System.out.println(randomIndex + i * batch);
+            assert i != 2;
         }
     }
     @Async("asyncHandlerExecutor")
@@ -93,8 +95,12 @@ class MainController {
 
 
     public Boolean handler(Integer a) throws InterruptedException {
-        Thread.sleep(1000);
-        log.info("a = " + a + Thread.currentThread());
+        try {
+            Thread.sleep(1000);
+            assert a != 2 : "assert error";
+        } catch (Throwable e) {
+            log.info("skip error", e);
+        }
         return true;
     }
 
