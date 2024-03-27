@@ -1,17 +1,21 @@
 package github.botapi.main;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * @author straycamel
  */
@@ -79,13 +83,25 @@ class MainController {
 
 
     public static void main(String[] args) {
-        Random r = new Random();
-        int batch = 6 / 3;
-        int randomIndex = r.nextInt(batch - 1);
-        for (int i = 0; i < 3; i++) {
-            assert i != 2;
+        System.out.println(Boolean.TRUE.equals(null));
+    }
+
+    public static void handler(HashMap<String, List<String>> data, String errorMsg, String key) {
+        if (StringUtils.isEmpty(errorMsg)
+                || "null".equals(errorMsg)) {
+            return;
+        }
+        // 统计问题
+        if (CollectionUtils.isEmpty(data.get(errorMsg))
+                || data.get(errorMsg) == null) {
+            data.put(errorMsg, Stream.of(key).collect(Collectors.toList()));
+        } else {
+            List<String> errorLabelUids = data.get(errorMsg);
+            errorLabelUids.add(key);
+            data.put(errorMsg, errorLabelUids);
         }
     }
+
     @Async("asyncHandlerExecutor")
     public Future<Boolean> asyncHandler(Integer a) throws InterruptedException {
         log.info("a = " + a);
