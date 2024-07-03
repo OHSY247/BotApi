@@ -1,15 +1,22 @@
 package github.botapi.util.service.impl;
 
-import github.botapi.util.constant.NetworkConstant;
-import github.botapi.util.service.HttpRequestService;
-import org.springframework.stereotype.Service;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import github.botapi.util.constant.NetworkConstant;
+import github.botapi.util.service.HttpRequestService;
+import org.springframework.stereotype.Service;
 
 /**
  * @author straycamel
@@ -104,7 +111,6 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
 
-
             //5、建立实际的连接
             connection.connect();
             //获取所有响应头字段
@@ -120,10 +126,10 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             while (null != (line = bufferedReader.readLine())) {
                 result += line;
             }
-//            int tmp;
-//            while((tmp = bufferedReader.read()) != -1){
-//                result += (char)tmp;
-//            }
+            //            int tmp;
+            //            while((tmp = bufferedReader.read()) != -1){
+            //                result += (char)tmp;
+            //            }
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -168,7 +174,6 @@ public class HttpRequestServiceImpl implements HttpRequestService {
                 }
             }
 
-
             //5、建立实际的连接
             connection.connect();
             //获取所有响应头字段
@@ -184,10 +189,10 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             while (null != (line = bufferedReader.readLine())) {
                 result += line;
             }
-//            int tmp;
-//            while((tmp = bufferedReader.read()) != -1){
-//                result += (char)tmp;
-//            }
+            //            int tmp;
+            //            while((tmp = bufferedReader.read()) != -1){
+            //                result += (char)tmp;
+            //            }
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -237,10 +242,10 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             while (null != (line = bufferedReader.readLine())) {
                 result += line;
             }
-//            int tmp;
-//            while((tmp = bufferedReader.read()) != -1){
-//                result += (char)tmp;
-//            }
+            //            int tmp;
+            //            while((tmp = bufferedReader.read()) != -1){
+            //                result += (char)tmp;
+            //            }
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -311,5 +316,15 @@ public class HttpRequestServiceImpl implements HttpRequestService {
             }
         }
         return result;
+    }
+
+
+    public static final long MINUTE = 1000 * 60L;
+    public static final long TEN_MINUTE = MINUTE * 10;
+    public static final long HALF_HOUR = MINUTE * 30;
+    public static final long ONE_DAY = MINUTE * 60 * 24;
+    public static final long TWO_WEEK = ONE_DAY * 14;
+    public static void main(String[] args) {
+        System.out.println(TWO_WEEK);
     }
 }

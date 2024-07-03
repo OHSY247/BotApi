@@ -18,12 +18,15 @@
         <java.version>1.8</java.version>
     </properties>
     <modules>
-        <module>demo</module>
         <module>gameBox</module>
         <module>destiny2</module>
         <module>main</module>
         <module>util</module>
         <module>steam</module>
+        <module>guitar-core</module>
+        <module>guitar-message</module>
+        <module>user</module>
+        <module>role</module>
     </modules>
     <dependencies>
         <dependency>
